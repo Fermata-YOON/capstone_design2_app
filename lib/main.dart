@@ -7,8 +7,11 @@ import 'package:provider/provider.dart';
 import 'providers/food.dart';
 import 'providers/user.dart';
 import 'providers/history.dart';
+import 'providers/record.dart';
+import 'providers/recommend.dart';
 import 'main_page/my_report.dart';
 import 'main_page/my_history.dart';
+import 'main_page/my_recommend.dart';
 import '/main_page/main_page.dart';
 import 'main_page/food_record/select_food.dart';
 
@@ -25,6 +28,8 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (BuildContext context) => Food()),
         ChangeNotifierProvider(create: (BuildContext context) => History()),
         ChangeNotifierProvider(create: (BuildContext context) => Nutrition()),
+        ChangeNotifierProvider(create: (BuildContext context) => Record()),
+        ChangeNotifierProvider(create: (BuildContext context) => Recommend()),
       ],
       child: MaterialApp(
         initialRoute: '/',
@@ -38,6 +43,7 @@ class MyApp extends StatelessWidget {
           '/join2' : (context) => const WriteUserInfo(),
           '/selectFood' : (context) => const SelectFood(),
           '/writeFoodDetail' : (context) => const WriteFoodDetail(),
+          '/myrecommend' : (context) => const MyRecommend(),
         },
         debugShowCheckedModeBanner: false,
         title: '식단추천',)

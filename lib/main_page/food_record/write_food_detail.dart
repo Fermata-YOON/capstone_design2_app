@@ -1,7 +1,10 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 //import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import '../../providers/food.dart';
+import '../../providers/record.dart';
 import 'package:intl/intl.dart';
 import 'package:http/http.dart' as http;
 import '../../my_server.dart';
@@ -16,14 +19,52 @@ class WriteFoodDetail extends StatefulWidget {
 class _WriteFoodDetail extends State<WriteFoodDetail> {
 
   final myServer = MyServer();
+  final record = Record();
+
 
   @override
   Widget build(BuildContext context) {  
 
     var food = Provider.of<Food>(context);
+    var record = Provider.of<Record>(context);
     String foodName = ModalRoute.of(context)?.settings.arguments as String;
 
-    addHistory() async {
+    void getRecord(String id) async {
+    try {
+      http.Response response = await http.get(Uri.parse("${myServer.getRecord}?id_give=$id"));
+      String body = utf8.decode(response.bodyBytes);
+      List<dynamic> list = jsonDecode(body);
+      //debugPrint(list as String?);
+      record.setRecords(list);
+    } catch (e) {
+      // ignore: use_build_context_synchronously
+      showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return AlertDialog(                                             
+          content: const SingleChildScrollView(
+          child: ListBody(
+            children: <Widget>[
+              Text('getRecord Error')
+            ],
+          ),
+          ),
+          actions: <Widget>[
+            ElevatedButton(
+              child: const Text("OK"),
+              onPressed: () {
+              Navigator.of(context).pop();
+                    },
+                  ),
+                ]
+            );
+            }
+        );                    
+    }
+  }      
+
+    void addHistory() async {
     try {
       // ignore: unused_local_variable
       http.Response response = await http.post(Uri.parse(myServer.postHistory), 
@@ -45,6 +86,7 @@ class _WriteFoodDetail extends State<WriteFoodDetail> {
                   ElevatedButton(
                     child: const Text('OK'), 
                     onPressed: () {
+                      getRecord(food.id);
                       Navigator.pushNamedAndRemoveUntil(context, '/main', (route) => false); 
                     },
                   ),
@@ -184,6 +226,7 @@ class _WriteFoodDetail extends State<WriteFoodDetail> {
                                   child: const Text('확인'), 
                                   onPressed: () {
                                     addHistory();
+                                    //getRecord(food.id);
                                   },
                                 ),
                               ]

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 import '../providers/user.dart';
+import '../providers/record.dart';
 import 'dart:convert';
 import '../my_server.dart';
 //import '/appMain.dart';
@@ -25,15 +26,15 @@ class _LogInState extends State<LogIn> {
 
   late User user;
   late Nutrition nutrition;
+  late Record record;
   final myServer = MyServer();
 
   onPressLogin(id, pw) async {
     try {
-      http.Response response1 = await http.get(Uri.parse("${myServer.login}?id_give=$id&pw_give=$pw"));
-      //http.Response response2 = await http.get(Uri.parse("${myServer.getNutrition}?id_give=$id&pw_give=$pw"));
-      if(response1.statusCode == 200 || response1.statusCode ==201) {
+      http.Response response = await http.get(Uri.parse("${myServer.login}?id_give=$id&pw_give=$pw"));
+      if(response.statusCode == 200 || response.statusCode ==201) {
         if(!mounted) return;
-        if(response1.body == "0") {
+        if(response.body == "0") {
           showDialog(
             context: context,
             barrierDismissible: false,
@@ -58,23 +59,20 @@ class _LogInState extends State<LogIn> {
                     }
           );      
         } else {
-           //Map<String, dynamic> body = jsonDecode(utf8.decode(response.bodyBytes));
-           //String body = utf8.decode(response.bodyBytes);
-           //String body = '{"id": 1, "title": "hello", "completed": false}';
-           Map<String, dynamic> body = jsonDecode(utf8.decode(response1.bodyBytes));
-           //String data = utf8.decode(response2.bodyBytes);
-           //List<dynamic> list = jsonDecode(data);
+           Map<String, dynamic> body = jsonDecode(utf8.decode(response.bodyBytes));
            user.setUser(body['id'], body['name'], body['sex'], body['type'], body['age'], body['height'], body['weight'], body['act']);
            nutrition.setData(body['kcal'], body['carbohydrate'], body['protein'], body['fat']);
+           getRecord(id);
            Navigator.pushNamedAndRemoveUntil(
             context,
             '/main',
-            // arguments: body['id'],
+            arguments: body['id'],
             (route) => false);  
         }
        
       }
     } catch(e) {
+      // ignore: use_build_context_synchronously
       showDialog(
             context: context,
             barrierDismissible: false,
@@ -100,7 +98,41 @@ class _LogInState extends State<LogIn> {
         );                              
     }
   }
-                                          
+
+  getRecord(String id) async {
+    try {
+      http.Response response = await http.get(Uri.parse("${myServer.getRecord}?id_give=$id"));
+      String body = utf8.decode(response.bodyBytes);
+      List<dynamic> list = jsonDecode(body);
+      //debugPrint(list as String?);
+      record.setRecords(list);
+    } catch (e) {
+      // ignore: use_build_context_synchronously
+      showDialog(
+            context: context,
+            barrierDismissible: false,
+            builder: (BuildContext context) {
+              return AlertDialog(                                             
+              content: const SingleChildScrollView(
+              child: ListBody(
+                children: <Widget>[
+                  Text('getRecord Error')
+                ],
+              ),
+              ),
+              actions: <Widget>[
+                ElevatedButton(
+                  child: const Text("OK"),
+                  onPressed: () {
+                  Navigator.of(context).pop();
+                        },
+                      ),
+                    ]
+                );
+                }
+        );                    
+    }
+  }                                          
   
   String convertHash(String password) {
     const uniqueKey = 'CapDi2';
@@ -114,6 +146,7 @@ class _LogInState extends State<LogIn> {
 
     user = Provider.of<User>(context);
     nutrition = Provider.of<Nutrition>(context);
+    record = Provider.of<Record>(context);
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
