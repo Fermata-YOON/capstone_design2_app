@@ -135,137 +135,150 @@ class _WriteFoodDetail extends State<WriteFoodDetail> {
     }
 
     return GestureDetector(
-      onTap: () {
-        FocusManager.instance.primaryFocus?.unfocus();
-      },
-      child: Scaffold(
-        resizeToAvoidBottomInset: false,
-        appBar: AppBar(
-          title: const Text("세부 정보 입력")
-        ),
-        body: Center(
-          child: Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: Column(
-              children: [
-                Text(
-                  foodName, 
-                  style: const TextStyle(fontSize: 40, fontWeight: FontWeight.bold)),
-                Text("1인분: ${food.gram}g", style: const TextStyle(fontSize: 15)),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Text("먹은 날짜: ", style: TextStyle(fontSize: 20)),
-                    TextButton(
-                      onPressed: datePicker,
-                      child: 
-                      Text(DateFormat('yyyy-MM-dd').format(food.date), style: const TextStyle(fontSize: 20)),
-                    ),
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const SizedBox(
-                      width: 70,
-                      height: 25,
-                      child: Text("섭취량: ", style: TextStyle(fontSize: 20),)
-                    ),
-                    SizedBox(
-                      width: 35,
-                      height: 25,
-                      child: TextField(
-                        controller: amountController,
-                        //decoration: 
-                          //InputDecoration(hintText: userAmount),
-                        keyboardType: const TextInputType.numberWithOptions(decimal: true),
-                      )
-                    ),
-                    const SizedBox(
-                      width: 35,
-                      height: 25,
-                      child: Text("인분", style: TextStyle(fontSize: 20))
-                    ),
-                    IconButton(
-                      icon: const Icon(Icons.calculate),
-                      onPressed: () {
-                        food.setAmount = double.parse(amountController.text);
-                      }),
-                    ],
-                  ),
-                Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: Text("총 섭취량: ${food.gram*food.amount}g", style: const TextStyle(fontSize: 20)),                      
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: ElevatedButton(
-                    onPressed: () {
-                      food.setAmount = double.parse(amountController.text);
-                      if(food.amount > 0 ) {
-                        showDialog(
-                        context: context,
-                        barrierDismissible: false,
-                        builder: (BuildContext context) {
-                          return AlertDialog(                                             
-                          content: SingleChildScrollView(
-                          child: ListBody(
-                            children: <Widget>[
-                              Text("확인: 총 ${food.amount}인분, ${food.amount*food.gram}g")
-                            ],
-                          ),
-                          ),
-                              actions: <Widget>[
-                                TextButton(
-                                  child: const Text('취소', style: TextStyle(color: Colors.red),), 
-                                  onPressed: () {
-                                    Navigator.of(context).pop();
-                                  },
-                                ),
-                                ElevatedButton(
-                                  child: const Text('확인'), 
-                                  onPressed: () {
-                                    addHistory();
-                                    //getRecord(food.id);
-                                  },
-                                ),
-                              ]
-                          );
-                        }
-                      ); 
-                      } else {
-                        showDialog(
-                          context: context,
-                          barrierDismissible: false,
-                          builder: (BuildContext context) {
-                            return AlertDialog(                                             
-                            content: const SingleChildScrollView(
-                            child: ListBody(
-                              children: <Widget>[
-                                Text("섭취량을 정확히 입력해주세요")
-                              ],
-                            ),
-                            ),
-                                actions: <Widget>[
-                                  ElevatedButton(
-                                    child: const Text('확인'), 
-                                    onPressed: () {
-                                      Navigator.of(context).pop();
-                                    },
-                                  ),
-                                ]
-                            );
-                          }
-                        );
-                      }     
-                    }, 
-                    child: const Text("기록하기", style: TextStyle(fontSize: 20),)))
-              ]                
+        onTap: () {
+          FocusManager.instance.primaryFocus?.unfocus();
+        },
+        child: Scaffold(
+            resizeToAvoidBottomInset: false,
+            appBar: AppBar(
+              title: const Text("세부 정보 입력"),
+              backgroundColor: Colors.lightGreen,
             ),
-          )
+            body: Center(
+                child: Padding(
+
+                  padding: const EdgeInsets.all(80.0),
+                  child: Column(
+                      children: [
+                        Text(
+                            foodName,
+                            style: const TextStyle(fontSize: 40, fontWeight: FontWeight.bold)),
+                        Text("1인분: ${food.gram}g", style: const TextStyle(fontSize: 15)),
+                        Row(
+                          //날짜
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Text("먹은 날짜: ", style: TextStyle(fontSize: 20)),
+                            TextButton(
+                              onPressed: datePicker,
+                              child:
+                              Text(DateFormat('yyyy-MM-dd').format(food.date), style: const TextStyle(fontSize: 20, color: Colors.green)),
+                            ),
+                          ],
+                        ),
+                        Row(
+                          //섭취량
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const SizedBox(
+                                width: 70,
+                                height: 25,
+                                child: Text("섭취량: ", style: TextStyle(fontSize: 20),)
+                            ),
+                            SizedBox(width: 10),
+                            SizedBox(
+                                width: 35,
+                                height: 25,
+                                child: TextField(
+                                  controller: amountController,
+                                  //decoration:
+                                  //InputDecoration(hintText: userAmount),
+                                  keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                                )
+                            ),
+                            const SizedBox(
+                                width: 35,
+                                height: 25,
+                                child: Text("인분", style: TextStyle(fontSize: 20))
+                            ),
+                            IconButton(
+                              //계산 아이콘
+                                icon: const Icon(Icons.calculate),
+                                onPressed: () {
+                                  food.setAmount = double.parse(amountController.text);
+                                }),
+                          ],
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: Text("총 섭취량: ${food.gram*food.amount}g", style: const TextStyle(fontSize: 20)),
+                        ),
+                        Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                //shape: RoundedRectangleBorder(	//모서리를 둥글게//
+                                //borderRadius: BorderRadius.circular(20))
+                                  backgroundColor: Colors.green
+                              ),
+                              onPressed: () {
+                                food.setAmount = double.parse(amountController.text);
+                                if(food.amount > 0 ) {
+                                  showDialog(
+                                      context: context,
+                                      barrierDismissible: false,
+                                      builder: (BuildContext context) {
+                                        return AlertDialog(
+                                            content: SingleChildScrollView(
+                                              child: ListBody(
+                                                children: <Widget>[
+                                                  Text("확인: 총 ${food.amount}인분, ${food.amount*food.gram}g")
+                                                ],
+                                              ),
+                                            ),
+                                            actions: <Widget>[
+                                              TextButton(
+                                                child: const Text('취소', style: TextStyle(color: Colors.red),),
+                                                onPressed: () {
+                                                  Navigator.of(context).pop();
+                                                },
+                                              ),
+                                              ElevatedButton(
+                                                child: const Text('확인'),
+                                                onPressed: () {
+                                                  addHistory();
+                                                },
+                                              ),
+                                            ]
+                                        );
+                                      }
+                                  );
+                                } else {
+                                  showDialog(
+                                      context: context,
+                                      barrierDismissible: false,
+                                      builder: (BuildContext context) {
+                                        return AlertDialog(
+                                            content: const SingleChildScrollView(
+                                              child: ListBody(
+                                                children: <Widget>[
+                                                  Text("섭취량을 정확히 입력해주세요")
+                                                ],
+                                              ),
+                                            ),
+                                            actions: <Widget>[
+                                              ElevatedButton(
+                                                child: const Text('확인'),
+                                                onPressed: () {
+                                                  Navigator.of(context).pop();
+                                                },
+                                              ),
+                                            ]
+                                        );
+                                      }
+                                  );
+                                }
+                              },
+                              child: const Text("기록하기", style: TextStyle(fontSize: 20),),
+
+                            )
+                        )
+                      ]
+                  ),
+                )
+            )
         )
-      )
     );
-    
+
   }
 }

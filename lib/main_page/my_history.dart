@@ -23,14 +23,23 @@ class _MyHistory extends State<MyHistory> {
     //getHistory(user.id);
 
     return Scaffold(
+        appBar: AppBar(
+          title: Text('섭취 기록' ),
+          backgroundColor: Colors.lightGreen,
+        ),
       //resizeToAvoidBottomInset: false,
       body: ListView.builder(
+
         itemCount: history.length,
         itemBuilder: (BuildContext context, int index) {
           if(history.length == 0) {
             return const Text("기록이 없습니다.");
           } else {
             return Card(
+              shape: RoundedRectangleBorder(
+                side: BorderSide(color: Colors.green, width: 2),
+                borderRadius: BorderRadius.circular(5),
+              ),
             child: ListTile(
               title: 
                 Text(history.foodName[index]),

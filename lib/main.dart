@@ -85,24 +85,49 @@ class _HomeScreenState extends State<HomeScreen> {
                     fontSize: 40,
                   ))
               ],),
+
+              Image.asset('assets/meal128.png'),
               Column(
-              children: [
-              ElevatedButton(
-                child: const Text('로그인하기'),
-                onPressed: () {
-                  Navigator.pushNamed(context, '/login');
-                }
-              ),
-              ElevatedButton(
-                child: const Text('회원가입'),
-                onPressed: () {
-                  Navigator.pushNamed(context, '/join1');
-                }
+                children: [
+                  ElevatedButton(
+                    child: const Text(
+                      '로그인',
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold, fontSize: 18),
+                    ),
+                    onPressed: () {
+                      Navigator.pushNamed(context, '/login');
+                    },
+                    style: ButtonStyle(
+                      minimumSize:
+                      MaterialStateProperty.all(Size(300, 50)),
+                      backgroundColor: MaterialStateProperty.all(
+                        Colors.lightGreen,
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 15),
+                  ElevatedButton(
+                      child: const Text(
+                        '회원가입',
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 18),
+                      ),
+                      onPressed: () {
+                        //Navigator.pushNamed(context, '/join');
+
+                        Navigator.pushNamed(context, '/join1');
+                      },
+                      style: ButtonStyle(
+                        minimumSize:
+                        MaterialStateProperty.all(Size(300, 50)),
+                        backgroundColor: MaterialStateProperty.all(
+                          Colors.lightGreen,
+                        ),
+                      ))
+                ],
               )
-            ],)
-            ],)     
-          )
-      )
-    );
+            ],
+          ))));
   }
 }

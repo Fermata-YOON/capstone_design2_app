@@ -39,7 +39,8 @@ class _SelectFood extends State<SelectFood> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        title: const Text("먹은 음식 기록하기")
+        title: const Text("먹은 음식 기록하기"),
+        backgroundColor: Colors.lightGreen,
       ),
       body: Column(
         children: <Widget>[
@@ -70,8 +71,15 @@ class _SelectFood extends State<SelectFood> {
               } else {
                 return Card(
                   child: ListTile(
+                      shape: RoundedRectangleBorder(
+                        side: BorderSide(color: Colors.green, width: 2),
+                        borderRadius: BorderRadius.circular(5),
+                      ),
                     title: 
-                      Text(foodName[index]),
+                      Text(foodName[index]   ,
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold
+                          )),
                     subtitle: 
                       Text("1인분 기준: ${foodAmount[index]}g"),
                     onTap: () {

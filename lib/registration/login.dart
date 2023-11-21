@@ -162,7 +162,7 @@ class _LogInState extends State<LogIn> {
           const Padding(padding: EdgeInsets.only(top: 50)),
           const Center(
             child: Text(
-              "Login",
+              "로그인",
               style: TextStyle(
                 fontSize: 30
               ),
@@ -208,9 +208,15 @@ class _LogInState extends State<LogIn> {
                                   });
                                 },
                                 style: ElevatedButton.styleFrom(
-                                    backgroundColor: Colors.orangeAccent
+                                    backgroundColor: (Colors.lightGreen),
+                                    minimumSize: Size(100, 40)
                                 ),
-                                child: const Text('Login')                                
+                                  child: const Text('로그인',
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 18
+                                    ),
+                                  )
                               )
                           ),                
                         ],

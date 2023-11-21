@@ -1,7 +1,10 @@
 // ignore_for_file: use_build_context_synchronously
+import 'package:capstone_design2/main_page/select_category.dart';
+
 import '../providers/nutrition.dart';
 import 'package:flutter/material.dart';
 import 'my_history.dart';
+import 'my_page.dart';
 import 'my_report.dart';
 import 'my_recommend.dart';
 import 'package:provider/provider.dart';
@@ -34,7 +37,8 @@ class _MainPage extends State<MainPage> {
   final List<Widget> _widgetOptions = <Widget>[
     const MyRecommend(),
     const MyReport(),
-    const MyHistory(),
+    const SelectCategory()
+    //const MyHistory(),
   ]; // 연결할 페이지 지정
 
   final myServer = MyServer();
@@ -79,7 +83,7 @@ class _MainPage extends State<MainPage> {
 
         case 2: 
         getHistory(user.id);
-        title = "섭취 기록";
+        title = "검색";
       }
     }); // 탭을 클릭했을 때 지정한 페이지로 이동
   }
@@ -105,6 +109,8 @@ class _MainPage extends State<MainPage> {
                   ),
                   actions: <Widget>[
                     ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.lightGreen),
                       child: const Text('OK'),
                       onPressed: () {
                       Navigator.of(context).pop();
@@ -126,12 +132,17 @@ class _MainPage extends State<MainPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(title)
+        title: Text(
+          title,
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+        ),
+        backgroundColor: Colors.lightGreen,
       ),
       body: SafeArea(
         child: _widgetOptions.elementAt(_selectedIndex),
       ),
       floatingActionButton: FloatingActionButton(
+          backgroundColor: Colors.green,
         onPressed: (){
           food.setId = user.id;
           _floatingActionButtonTapped();
@@ -142,40 +153,54 @@ class _MainPage extends State<MainPage> {
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(icon: Icon(Icons.recommend), label: "추천"),
           BottomNavigationBarItem(icon: Icon(Icons.leaderboard), label: "분석"),
-          BottomNavigationBarItem(icon: Icon(Icons.list_alt), label: "기록"),
+          BottomNavigationBarItem(icon: Icon(Icons.list_alt), label: "검색"),
         ],
         currentIndex: _selectedIndex, //지정인덱스로 이동
-        selectedItemColor: Colors.blue,
+        selectedItemColor: Colors.lightGreen,
         onTap: _onItemTapped,
       ),
       drawer: Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: <Widget>[
-            DrawerHeader(
-              decoration: const BoxDecoration(
-                color: Colors.blue,
+          child: ListView(padding: EdgeInsets.zero, children: <Widget>[
+            Container(
+              height: 90,
+              child: DrawerHeader(
+                  decoration: const BoxDecoration(
+                    color: Colors.lightGreen,
+                  ),
+                  child: Text(
+                    "카테고리",
+                    style: TextStyle(
+                        fontWeight: FontWeight.w800,
+                        fontSize: 20,
+                        color: Colors.white),
+                  )),
+            ),
+            ElevatedButton(
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all(Colors.white24),
+                elevation: MaterialStateProperty.all(0),
               ),
-              child: Text(user.name)
-            ),
-            ListTile(
-              title: Text(user.id),
-            ),
-            ListTile(
-              title: Text("${user.age}세"),
-            ),
-            ListTile(
-              title: Text(user.viewSex),
-            ),
-            ListTile(
-              title: Text(user.viewType),
-            ),
-          ]
-        )
-      )
-    );
+              child: Row(
+                children: [
+                  Icon(Icons.person, color: Colors.green),
+                  SizedBox(width: 20),
+                  const Text(
+                    '내 정보',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontWeight: FontWeight.w500,
+                      color: Colors.black,
+                    ),
+                  ),
+                ],
+              ),
+              onPressed: () {
+                Navigator.push(
+                    context, MaterialPageRoute(builder: (_) => MyPage()));
+              },
+            )
+          ])));
   }
-
   @override
   void initState() {
     super.initState();
