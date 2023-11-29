@@ -8,6 +8,7 @@ class User with ChangeNotifier {
   late String _name;
   late String _type;
   late String _sex;
+  late String _preference;
   late int _act;
   late int _age;
   late int _height;
@@ -18,6 +19,7 @@ class User with ChangeNotifier {
   String get name => _name;
   String get sex => _sex;
   String get type => _type;
+  String get preference => _preference;
   int get act => _act;
   int get age => _age;
   int get height => _height;
@@ -38,6 +40,20 @@ class User with ChangeNotifier {
       return "운동인";
     } else {
       return "다이어터";
+    }
+  }
+
+  String get viewPreference {
+    if(_preference == 'rice') {
+      return '밥';
+    } if(_preference == 'noodle') {
+      return '면';
+    } if(_preference == 'bread') {
+      return '빵';
+    } if(_preference == 'meat') {
+      return '고기';
+    } else {
+      return '상관없음';
     }
   }
 
@@ -66,15 +82,22 @@ class User with ChangeNotifier {
     notifyListeners();
   }
 
-  setUser(String id, String name, String sex, String type, int age, int height, int weight, int act) {
+  setUser(String id, String name, String sex, String type, String preference, int age, int height, int weight, int act) {
     _id = id;
     _name = name;
     _sex = sex;
     _type = type;
+    _preference = preference;
     _age = age;
     _height = height;
     _weight = weight;
     _act = act;
+    notifyListeners();
+  }
+
+  setPreference(String category) {
+    _preference = category;
+
     notifyListeners();
   }
 } 

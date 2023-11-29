@@ -1,4 +1,4 @@
-import 'package:capstone_design2/main_page/select_category.dart';
+//import 'package:capstone_design2/main_page/select_category.dart';
 import 'package:capstone_design2/providers/nutrition.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

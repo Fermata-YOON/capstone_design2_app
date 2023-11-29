@@ -1,30 +1,31 @@
-// This is a basic Flutter widget test.
-//
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility in the flutter_test package. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
-
 import 'package:flutter/material.dart';
-import 'package:flutter_test/flutter_test.dart';
 
-import 'package:capstone_design2/main.dart';
+class Event {
+  late String title;
+
+  Event(this.title);
+
+  @override
+  String toString() => title;
+}
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+  List<String> name = ['apple', 'banana', 'orenge', 'mango'];
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
+  List<DateTime> date = [DateTime.parse('2023-11-01'), DateTime.parse('2023-11-02'), DateTime.parse('2023-11-03'), DateTime.parse('2023-11-01')];
 
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
-  });
+  Map<DateTime, dynamic> events = {};
+
+  for(int i=0; i<name.length; i++) {
+      if (events[DateTime.parse(date[i].toString())] == null) {
+        events.addAll({        
+          DateTime.parse(date[i].toString()) : [Event(name[i])]
+        });
+     } else {
+        events[DateTime.parse(date[i].toString())]?.add(Event(name[i]));
+     }
+    }
+
+  debugPrint(events.toString());
 }

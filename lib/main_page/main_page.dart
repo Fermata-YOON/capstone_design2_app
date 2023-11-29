@@ -1,9 +1,9 @@
 // ignore_for_file: use_build_context_synchronously
-import 'package:capstone_design2/main_page/select_category.dart';
-
+import 'package:capstone_design2/main_page/calendar.dart';
+//import 'package:capstone_design2/main_page/select_category.dart';
 import '../providers/nutrition.dart';
 import 'package:flutter/material.dart';
-import 'my_history.dart';
+//import 'my_history.dart';
 import 'my_page.dart';
 import 'my_report.dart';
 import 'my_recommend.dart';
@@ -37,7 +37,7 @@ class _MainPage extends State<MainPage> {
   final List<Widget> _widgetOptions = <Widget>[
     const MyRecommend(),
     const MyReport(),
-    const SelectCategory()
+    const MyCalendar()
     //const MyHistory(),
   ]; // 연결할 페이지 지정
 
@@ -61,9 +61,9 @@ class _MainPage extends State<MainPage> {
     nutrition.setData(list[0]['kcal'], list[0]['carbohydrate'], list[0]['protein'], list[0]['fat']);    
   }
 
-  void getRecommend(String id) async {
+  void getRecommend(String id, String label) async {
     // ignore: unused_local_variable
-    http.Response response = await http.get(Uri.parse("${myServer.getRecommend}?id_give=$id"));
+    http.Response response = await http.get(Uri.parse("${myServer.getRecommend}?id_give=$id&label_give=$label"));
     String body = utf8.decode(response.bodyBytes);
     List<dynamic> list = jsonDecode(body);
     if(!mounted) return;
@@ -75,7 +75,7 @@ class _MainPage extends State<MainPage> {
       _selectedIndex = index;
       switch(index) { //AppBar title 변경
         case 0: 
-          getRecommend(user.id);
+          getRecommend(user.id, user.preference);
           title = "추천 음식";
         case 1: 
         //getNutrition(user.id);

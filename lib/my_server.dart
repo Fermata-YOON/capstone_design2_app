@@ -10,4 +10,5 @@ class MyServer {
   String get getNutrition => '$url/get_nutrition';
   String get getRecord => '$url/get_record';
   String get getRecommend => '$url/get_recommend';
+  String get postPreference => '$url/post_preference';
 }

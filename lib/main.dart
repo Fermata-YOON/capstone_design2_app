@@ -1,6 +1,9 @@
+import 'package:capstone_design2/main_page/calendar.dart';
 import 'package:capstone_design2/main_page/food_record/write_food_detail.dart';
+import 'package:capstone_design2/main_page/select_preference.dart';
 import 'package:capstone_design2/providers/nutrition.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'registration/login.dart';
 import 'registration/join.dart';
 import 'package:provider/provider.dart';
@@ -15,7 +18,9 @@ import 'main_page/my_recommend.dart';
 import '/main_page/main_page.dart';
 import 'main_page/food_record/select_food.dart';
 
-void main() => runApp(const MyApp());
+void main() {
+  initializeDateFormatting().then((_) => runApp(const MyApp()));
+}
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -44,6 +49,8 @@ class MyApp extends StatelessWidget {
           '/selectFood' : (context) => const SelectFood(),
           '/writeFoodDetail' : (context) => const WriteFoodDetail(),
           '/myrecommend' : (context) => const MyRecommend(),
+          '/myCalender' : (context) => const MyCalendar(),
+          '/selectPreference' : (context) => const SelectPreference()
         },
         debugShowCheckedModeBanner: false,
         title: '식단추천',)
