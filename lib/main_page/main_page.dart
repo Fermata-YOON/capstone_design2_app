@@ -53,6 +53,40 @@ class _MainPage extends State<MainPage> {
     history.setLength = list.length;        
   }
 
+  getAnalysis(String id) async {
+    try {
+      http.Response response = await http.get(Uri.parse("${myServer.getAnalysis}?id_give=$id"));
+      if(!mounted) return;
+      Map<String, dynamic> body = jsonDecode(utf8.decode(response.bodyBytes));
+      nutrition.setRate(body['carbohydrate'], body['protein'], body['fat']);
+    } catch(e) {
+      // ignore: use_build_context_synchronously
+      showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return AlertDialog(                                             
+            content: const SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text('getAnalysis Error')
+              ],
+            ),
+            ),
+            actions: <Widget>[
+              ElevatedButton(
+                child: const Text("OK"),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ]
+          );
+        }
+      ); 
+    }
+  }          
+
   void getNutrition(String id) async {
     http.Response response = await http.get(Uri.parse("${myServer.getNutrition}?id_give=$id"));
     String body = utf8.decode(response.bodyBytes);
@@ -79,6 +113,7 @@ class _MainPage extends State<MainPage> {
           title = "추천 음식";
         case 1: 
         //getNutrition(user.id);
+        getAnalysis(user.id);
         title = "영양 분석";
 
         case 2: 
@@ -130,11 +165,13 @@ class _MainPage extends State<MainPage> {
     history = Provider.of<History>(context);
     recommend = Provider.of<Recommend>(context);
 
+    //getAnalysis(user.id);
+
     return Scaffold(
       appBar: AppBar(
         title: Text(
           title,
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
         ),
         backgroundColor: Colors.lightGreen,
       ),

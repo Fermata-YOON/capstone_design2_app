@@ -69,7 +69,6 @@ class _LogInState extends State<LogIn> {
             arguments: body['id'],
             (route) => false);  
         }
-       
       }
     } catch(e) {
       // ignore: use_build_context_synchronously
@@ -102,37 +101,73 @@ class _LogInState extends State<LogIn> {
   getRecord(String id) async {
     try {
       http.Response response = await http.get(Uri.parse("${myServer.getRecord}?id_give=$id"));
+      //if(!mounted) return;
       String body = utf8.decode(response.bodyBytes);
       List<dynamic> list = jsonDecode(body);
       //debugPrint(list as String?);
       record.setRecords(list);
-    } catch (e) {
+      getAnalysis(id);
+      } catch (e) {
       // ignore: use_build_context_synchronously
       showDialog(
-            context: context,
-            barrierDismissible: false,
-            builder: (BuildContext context) {
-              return AlertDialog(                                             
-              content: const SingleChildScrollView(
-              child: ListBody(
-                children: <Widget>[
-                  Text('getRecord Error')
-                ],
-              ),
-              ),
-              actions: <Widget>[
-                ElevatedButton(
-                  child: const Text("OK"),
-                  onPressed: () {
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return AlertDialog(                                             
+            content: const SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text('getRecord Error')
+              ],
+            ),
+            ),
+            actions: <Widget>[
+              ElevatedButton(
+                child: const Text("OK"),
+                onPressed: () {
                   Navigator.of(context).pop();
-                        },
-                      ),
-                    ]
-                );
-                }
-        );                    
+                },
+              ),
+            ]
+          );
+        }
+      );                    
     }
-  }                                          
+  }        
+  
+  getAnalysis(String id) async {
+    try {
+      http.Response response = await http.get(Uri.parse("${myServer.getAnalysis}?id_give=$id"));
+      if(!mounted) return;
+      Map<String, dynamic> body = jsonDecode(utf8.decode(response.bodyBytes));
+      nutrition.setRate(body['carbohydrate'], body['protein'], body['fat']);
+    } catch(e) {
+      // ignore: use_build_context_synchronously
+      showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return AlertDialog(                                             
+            content: const SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text('getAnalysis Error')
+              ],
+            ),
+            ),
+            actions: <Widget>[
+              ElevatedButton(
+                child: const Text("OK"),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ]
+          );
+        }
+      ); 
+    }
+  }                               
   
   String convertHash(String password) {
     const uniqueKey = 'CapDi2';

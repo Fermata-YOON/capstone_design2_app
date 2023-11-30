@@ -43,6 +43,7 @@ dependencies:
   crypto:
   provider:
   percent_indicator: ^4.0.1
+  pie_chart:
 
 dev_dependencies:
   flutter_test:

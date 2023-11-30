@@ -1,12 +1,10 @@
 import 'package:capstone_design2/providers/nutrition.dart';
 import 'package:flutter/material.dart';
-
-//import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import '../providers/user.dart';
 import '../providers/record.dart';
 import 'package:percent_indicator/percent_indicator.dart';
-//import 'package:http/http.dart' as http;
+import 'package:pie_chart/pie_chart.dart';
 
 class MyReport extends StatefulWidget {
   const MyReport({super.key});
@@ -35,6 +33,8 @@ class _MyReport extends State<MyReport> {
     user = Provider.of<User>(context);
     nutrition = Provider.of<Nutrition>(context);
     record = Provider.of<Record>(context);
+
+    Map<String, double> pieChartData = {'탄수화물' : double.parse(nutrition.carboRate.toString()), '단백질' : double.parse(nutrition.proteinRate.toString()), '지방' : double.parse(nutrition.fatRate.toString())};
 
     //Map<String, Object> args = ModalRoute.of(context)?.settings.arguments as Map<String, Object>;
     //String args = ModalRoute.of(context)?.settings.arguments as String;
@@ -121,6 +121,33 @@ class _MyReport extends State<MyReport> {
                 ),
               ),
               SizedBox(height: 10,),
+              PieChart(
+                dataMap: pieChartData,
+                //animationDuration: false,
+                chartLegendSpacing: 16,
+                chartRadius: MediaQuery.of(context).size.width / 1.5,
+                colorList: const [Colors.deepOrange, Colors.blueAccent, Colors.yellow],
+                initialAngleInDegree: 0,
+                chartType: ChartType.disc,
+                ringStrokeWidth: 32,
+                legendOptions: const LegendOptions(
+                  showLegendsInRow: false,
+                  legendPosition: LegendPosition.right,
+                  showLegends: true,
+                  legendShape: BoxShape.circle,
+                  legendTextStyle: TextStyle(
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                chartValuesOptions: const ChartValuesOptions(
+                  showChartValueBackground: true,
+                  showChartValues: true,
+                  showChartValuesInPercentage: false,
+                  showChartValuesOutside: false,
+                  decimalPlaces: 1,
+                ),
+              ), 
+              SizedBox(height: 10,),    
               Expanded(
                   child: ListView.builder(
                       itemCount: record.list.length,
