@@ -20,7 +20,6 @@ class _MyHistory extends State<MyHistory> {
 
     history = Provider.of<History>(context);
     user = Provider.of<User>(context);
-    //getHistory(user.id);
 
     return Scaffold(
         appBar: AppBar(
@@ -29,7 +28,6 @@ class _MyHistory extends State<MyHistory> {
         ),
       //resizeToAvoidBottomInset: false,
       body: ListView.builder(
-
         itemCount: history.length,
         itemBuilder: (BuildContext context, int index) {
           if(history.length == 0) {
@@ -40,17 +38,17 @@ class _MyHistory extends State<MyHistory> {
                 side: const BorderSide(color: Colors.green, width: 2),
                 borderRadius: BorderRadius.circular(5),
               ),
-            child: ListTile(
-              title: 
-                Text(history.foodName[index]),
-              subtitle: 
-              Text("${history.foodDate[index]}   섭취량: ${history.foodAmount[index]}인분 총${history.foodTotal[index]}g"),
-              //isThreeLine: true,
-            ),
-          );
-          }
+              child: ListTile(
+                title: 
+                  Text(history.foodName[index]),
+                subtitle: 
+                Text("${history.foodDate[index]}   섭취량: ${history.foodAmount[index]}인분 총${history.foodTotal[index]}g"),
+                //isThreeLine: true,
+              ),
+            );
+          } 
         }
-      )
+      ),
     );
   }
 }

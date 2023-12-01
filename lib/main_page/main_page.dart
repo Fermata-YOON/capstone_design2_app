@@ -207,7 +207,7 @@ class _MainPage extends State<MainPage> {
       drawer: Drawer(
           child: ListView(padding: EdgeInsets.zero, children: <Widget>[
             const SizedBox(
-              height: 120,
+              height: 100,
               child: DrawerHeader(
                   decoration: BoxDecoration(
                     color: Colors.lightGreen,
@@ -251,7 +251,31 @@ class _MainPage extends State<MainPage> {
               ),
               child: const Row(
                 children: [
-                  Icon(Icons.person, color: Colors.green),
+                  Icon(Icons.storage, color: Colors.green),
+                  SizedBox(width: 20),
+                  Text(
+                    '전체 기록',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontWeight: FontWeight.w500,
+                      color: Colors.black,
+                    ),
+                  ),
+                ],
+              ),
+              onPressed: () {
+                getHistory(user.id);
+                Navigator.pushNamed(context, '/myhistory');
+              },
+            ),
+            ElevatedButton(
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all(Colors.white24),
+                elevation: MaterialStateProperty.all(0),
+              ),
+              child: const Row(
+                children: [
+                  Icon(Icons.exit_to_app, color: Colors.green),
                   SizedBox(width: 20),
                   Text(
                     '로그아웃',
