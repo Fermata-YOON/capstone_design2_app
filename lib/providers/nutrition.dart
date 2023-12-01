@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 
 class Nutrition with ChangeNotifier {
-  late int _kcal;
-  late int _carbohydrate;
-  late int _protein;
-  late int _fat;
+  int _kcal = 0;
+  int _carbohydrate = 0;
+  int _protein = 0;
+  int _fat = 0;
 
-  late int _carboRate;
-  late int _proteinRate;
-  late int _fatRate;
+  int _carboRate = 0;
+  int _proteinRate = 0;
+  int _fatRate = 0;
 
   int get kcal => _kcal;
   int get carbohydrate => _carbohydrate;
@@ -33,5 +33,16 @@ class Nutrition with ChangeNotifier {
     _fatRate = fatRate;
 
     notifyListeners();
+  }
+
+  void clear() {
+    _kcal = 0;
+    _carboRate = 0;
+    _protein = 0;
+    _fat = 0;
+
+    _carboRate = 0;
+    _proteinRate = 0;
+    _fatRate = 0;
   }
 } 

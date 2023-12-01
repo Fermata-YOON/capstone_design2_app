@@ -89,6 +89,7 @@ class _JoinUser extends State<JoinUser> {
         }
       }
     } catch(e) {
+      // ignore: use_build_context_synchronously
       return showDialog(
         context: context,
         barrierDismissible: false,
@@ -276,38 +277,39 @@ class _WriteUserInfo extends State<WriteUserInfo> {
       http.Response response = await http.post(Uri.parse(myServer.join), 
       body: {'id_give': id, 'pw_give': pw, 'name_give': name, 'age_give': age, 'sex_give': sex, 'type_give': type, 'height_give': height, 'weight_give': weight, 'act_give': act});
       if(!mounted) return;
-        showDialog(
-          context: context,
-          barrierDismissible: false,
-          builder: (BuildContext context) {
-            return AlertDialog(                                             
-            content: const SingleChildScrollView(
-            child: ListBody(
-              children: <Widget>[
-                Text("회원가입 완료")
-                    ],
-                  ),
+      showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return AlertDialog(                                             
+          content: const SingleChildScrollView(
+          child: ListBody(
+            children: <Widget>[
+              Text("회원가입 완료")
+                  ],
                 ),
-                actions: <Widget>[
-                  ElevatedButton(
-                    child: const Text('OK'), 
-                    onPressed: () {
-                     Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false); 
-                    },
-                  ),
-                ]
-            );}          
-        );  
+              ),
+              actions: <Widget>[
+                ElevatedButton(
+                  child: const Text('OK'), 
+                  onPressed: () {
+                    Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false); 
+                  },
+                ),
+              ]
+          );}          
+      );  
     } catch(e) {
       showDialog(
         context: context,
         barrierDismissible: false,
         builder: (BuildContext context) {
           return AlertDialog(
-            content: const SingleChildScrollView(
+            content: SingleChildScrollView(
               child: ListBody(
                 children: <Widget>[
-                  Text('error')
+                  const Text('error'),
+                  Text('$id / $pw / $name / $age / $sex / $type / $height / $weight / $act')
                 ],
               ),
             ),
@@ -504,7 +506,7 @@ class _WriteUserInfo extends State<WriteUserInfo> {
                           if(_formkey.currentState!.validate()) {
                           _formkey.currentState!.save();
                           user.writeUser(inputName, inputSex, inputType, inputAge, inputHeight, inputWeight, int.parse(inputAct));
-                          onPressJoin(user.id, user.pw, user.name, user.age.toString(), user.sex, user.type, user.height.toString(), user.weight.toString(), user.act);
+                          onPressJoin(user.id, user.pw, user.name, user.age.toString(), user.sex, user.type, user.height.toString(), user.weight.toString(), user.act.toString());
                         } 
                       })
                   ],)

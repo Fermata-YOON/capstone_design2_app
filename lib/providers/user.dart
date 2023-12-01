@@ -100,4 +100,17 @@ class User with ChangeNotifier {
 
     notifyListeners();
   }
+
+  void clear() {
+    _id ='';
+    _pw = '';
+    _name = '';
+    _type = '';
+    _sex = '';
+    _preference = '';
+    _act = 0;
+    _age = 0;
+    _height = 0;
+    _weight = 0;
+  }
 } 

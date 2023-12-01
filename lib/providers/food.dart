@@ -7,6 +7,13 @@ class Food with ChangeNotifier {
   double _amount = 0; //섭취량 ex 1인분, 2인분
   DateTime _date = DateTime.now();
 
+  String get id => _id;
+  String get code => _code;
+  double get gram => _gram;
+  double get amount => _amount;
+  double get total => _amount*_gram;
+  DateTime get date => _date;
+  
   set setId(String value) {
     _id = value;
     notifyListeners();
@@ -30,10 +37,10 @@ class Food with ChangeNotifier {
     notifyListeners();
   }
 
-  String get id => _id;
-  String get code => _code;
-  double get gram => _gram;
-  double get amount => _amount;
-  double get total => _amount*_gram;
-  DateTime get date => _date;
+  void clear() {
+    _id = '';
+    _code = '';
+    _gram = 0;
+    _amount = 0;
+  }
 } 

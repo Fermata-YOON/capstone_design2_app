@@ -167,7 +167,7 @@ class _LogInState extends State<LogIn> {
         }
       ); 
     }
-  }                               
+  }                             
   
   String convertHash(String password) {
     const uniqueKey = 'CapDi2';
@@ -244,7 +244,7 @@ class _LogInState extends State<LogIn> {
                                 },
                                 style: ElevatedButton.styleFrom(
                                     backgroundColor: (Colors.lightGreen),
-                                    minimumSize: Size(100, 40)
+                                    minimumSize: const Size(100, 40)
                                 ),
                                   child: const Text('로그인',
                                     style: TextStyle(

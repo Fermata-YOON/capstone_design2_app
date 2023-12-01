@@ -66,6 +66,33 @@ class _MyCalendar extends State<MyCalendar> {
       return history.events[day] ?? [];
     }
 
+    if(history.length == 0) {
+      return TableCalendar(
+          focusedDay: focusedDay, 
+          firstDay: DateTime.now(), 
+          lastDay: DateTime.now(),
+          locale: 'ko-KR',
+          headerStyle: const HeaderStyle(
+            formatButtonVisible: false,
+            titleCentered: true,
+            leftChevronVisible: true,
+            rightChevronVisible: true,
+          ),
+          calendarStyle: CalendarStyle(
+            markersMaxCount: 3,
+            canMarkersOverflow: false,
+            markerSize: 10.0,
+            markerDecoration: BoxDecoration(
+              color: Colors.red.shade200,
+              shape: BoxShape.circle,
+            ),
+            selectedDecoration: const BoxDecoration(
+              color: Colors.green,
+              shape: BoxShape.circle
+            ),
+          ),
+      );
+    }
     return Column(
       children: [
         TableCalendar(

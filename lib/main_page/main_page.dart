@@ -1,20 +1,21 @@
 // ignore_for_file: use_build_context_synchronously
 import 'package:capstone_design2/main_page/calendar.dart';
 //import 'package:capstone_design2/main_page/select_category.dart';
-import '../providers/nutrition.dart';
 import 'package:flutter/material.dart';
 //import 'my_history.dart';
 import 'my_page.dart';
 import 'my_report.dart';
 import 'my_recommend.dart';
 import 'package:provider/provider.dart';
-import '../providers/user.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import '../my_server.dart';
 import '../providers/food.dart';
 import '../providers/history.dart';
 import '../providers/recommend.dart';
+import '../providers/user.dart';
+import '../providers/nutrition.dart';
+import '../providers/record.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({Key? key}) : super(key: key);
@@ -30,6 +31,7 @@ class _MainPage extends State<MainPage> {
   late History history;
   late Nutrition nutrition;
   late Recommend recommend;
+  late Record record;
 
   int _selectedIndex = 1; //선택된 페이지의 인덱스 번호 초기화
   String title = "영양 분석"; //AppBar title 처음에는 Home
@@ -49,8 +51,12 @@ class _MainPage extends State<MainPage> {
     String body = utf8.decode(response.bodyBytes);
     List<dynamic> list = jsonDecode(body);
     if(!mounted) return;
-    history.setList = list;
-    history.setLength = list.length;        
+    if(list.isEmpty) {
+      history.setEmpty();
+    } else {
+      history.setList = list;
+      history.setLength = list.length;   
+    }    
   }
 
   getAnalysis(String id) async {
@@ -60,7 +66,6 @@ class _MainPage extends State<MainPage> {
       Map<String, dynamic> body = jsonDecode(utf8.decode(response.bodyBytes));
       nutrition.setRate(body['carbohydrate'], body['protein'], body['fat']);
     } catch(e) {
-      // ignore: use_build_context_synchronously
       showDialog(
         context: context,
         barrierDismissible: false,
@@ -160,10 +165,13 @@ class _MainPage extends State<MainPage> {
 
   @override
   Widget build(BuildContext context) {
+
     user = Provider.of<User>(context);
     food = Provider.of<Food>(context);
     history = Provider.of<History>(context);
     recommend = Provider.of<Recommend>(context);
+    record = Provider.of<Record>(context);
+    nutrition = Provider.of<Nutrition>(context);
 
     //getAnalysis(user.id);
 
@@ -198,10 +206,10 @@ class _MainPage extends State<MainPage> {
       ),
       drawer: Drawer(
           child: ListView(padding: EdgeInsets.zero, children: <Widget>[
-            Container(
-              height: 90,
+            const SizedBox(
+              height: 120,
               child: DrawerHeader(
-                  decoration: const BoxDecoration(
+                  decoration: BoxDecoration(
                     color: Colors.lightGreen,
                   ),
                   child: Text(
@@ -217,11 +225,11 @@ class _MainPage extends State<MainPage> {
                 backgroundColor: MaterialStateProperty.all(Colors.white24),
                 elevation: MaterialStateProperty.all(0),
               ),
-              child: Row(
+              child: const Row(
                 children: [
                   Icon(Icons.person, color: Colors.green),
                   SizedBox(width: 20),
-                  const Text(
+                  Text(
                     '내 정보',
                     textAlign: TextAlign.center,
                     style: TextStyle(
@@ -233,10 +241,79 @@ class _MainPage extends State<MainPage> {
               ),
               onPressed: () {
                 Navigator.push(
-                    context, MaterialPageRoute(builder: (_) => MyPage()));
+                    context, MaterialPageRoute(builder: (_) => const MyPage()));
+              },
+            ),
+            ElevatedButton(
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all(Colors.white24),
+                elevation: MaterialStateProperty.all(0),
+              ),
+              child: const Row(
+                children: [
+                  Icon(Icons.person, color: Colors.green),
+                  SizedBox(width: 20),
+                  Text(
+                    '로그아웃',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontWeight: FontWeight.w500,
+                      color: Colors.black,
+                    ),
+                  ),
+                ],
+              ),
+              onPressed: () {
+                showDialog(
+                  context: context,
+                  barrierDismissible: false,
+                  builder: (BuildContext context) {
+                    return AlertDialog(                                             
+                      content: const SingleChildScrollView(
+                      child: ListBody(
+                        children: <Widget>[
+                          Text('로그이웃 하시겠습니까?')
+                        ],
+                      ),
+                      ),
+                      actions: <Widget>[
+                        ElevatedButton(
+                          style: ButtonStyle(
+                            backgroundColor: MaterialStateProperty.all(Colors.grey)
+                          ),
+                          child: const Text("취소"),
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                        ),
+                        ElevatedButton(
+                          style: ButtonStyle(
+                            backgroundColor: MaterialStateProperty.all(Colors.lightGreen)
+                          ),
+                          child: const Text("확인"),
+                          onPressed: () {
+                            Navigator.pushNamedAndRemoveUntil(
+                              context,
+                              '/',
+                              (route) => false);  
+                            user.clear();
+                            food.clear();
+                            history.clear();
+                            nutrition.clear();
+                            recommend.clear();
+                            record.clear();
+                          },
+                        ),
+                      ]
+                    );
+                  }
+                ); 
               },
             )
-          ])));
+          ]
+        )
+      )
+    );
   }
   @override
   void initState() {

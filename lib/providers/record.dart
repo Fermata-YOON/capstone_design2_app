@@ -20,8 +20,12 @@ class Record with ChangeNotifier {
 
   setRecords(List<dynamic> list) {
     _list = list;
-
-    if(DateFormat('yyyy-MM-dd').format(now) == list[0]['date']) {
+    if (_list.isEmpty) {
+      _todayKcal = 0;
+      _todayCarbohydrate = 0;
+      _todayProtein = 0;
+      _todayFat = 0;
+    } else if(DateFormat('yyyy-MM-dd').format(now) == list[0]['date']) {
       _todayKcal = int.parse(list[0]['kcal']);
       _todayCarbohydrate = double.parse(list[0]['carbohydrate'].toStringAsFixed(2));
       _todayProtein = double.parse(list[0]['protein'].toStringAsFixed(2));
@@ -35,5 +39,13 @@ class Record with ChangeNotifier {
     }
 
     notifyListeners();
+  }
+
+  void clear() {
+    _list.clear();
+    _todayKcal = 0;
+    _todayCarbohydrate = 0;
+    _todayProtein = 0;
+    _todayFat = 0;
   }
 }

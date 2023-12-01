@@ -20,7 +20,7 @@ class History with ChangeNotifier {
 
   final Map<DateTime, List<Event>> _events = {};
 
-  late int _length;
+  int _length = 0;
 
   List get foodName => _foodName;
   List get foodAmount => _foodAmount;
@@ -47,6 +47,15 @@ class History with ChangeNotifier {
     notifyListeners();
   }
 
+  setEmpty() {
+    _length = 0;
+
+    _foodName = List.filled(1, "");
+    _foodAmount = List.filled(1, 0);
+    _foodTotal = List.filled(1, 0);
+    _foodDate = List.filled(1, "");
+  }
+
   set setLength(int value) {
     _length = value;
 
@@ -65,6 +74,18 @@ class History with ChangeNotifier {
         _events[DateTime.utc(int.parse(date[0]), int.parse(date[1]), int.parse(date[2]))]?.add(Event(_foodName[i]));
       }
      }
+
     notifyListeners();
   }
- }
+
+  void clear() {
+    _foodName = List.empty(growable: true);
+    _foodDate = List.empty(growable: true);
+    _foodAmount = List.empty(growable: true);
+    _foodTotal = List.empty(growable: true);
+    if(_events.isEmpty) {
+       _events.clear();
+    }
+    _length = 0;
+  }
+}

@@ -21,4 +21,10 @@ class Recommend with ChangeNotifier {
     } 
     notifyListeners();
   }
+
+  void clear() {
+    _name.clear();
+    _category.clear();
+    _detail.clear();
+  }
 } 

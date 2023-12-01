@@ -24,7 +24,7 @@ class _MyHistory extends State<MyHistory> {
 
     return Scaffold(
         appBar: AppBar(
-          title: Text('섭취 기록' ),
+          title: const Text('섭취 기록' ),
           backgroundColor: Colors.lightGreen,
         ),
       //resizeToAvoidBottomInset: false,
@@ -37,7 +37,7 @@ class _MyHistory extends State<MyHistory> {
           } else {
             return Card(
               shape: RoundedRectangleBorder(
-                side: BorderSide(color: Colors.green, width: 2),
+                side: const BorderSide(color: Colors.green, width: 2),
                 borderRadius: BorderRadius.circular(5),
               ),
             child: ListTile(
