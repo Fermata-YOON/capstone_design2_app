@@ -6,6 +6,7 @@ class MyServer {
   String get join => '$url/post_join';
   String get food => '$url/get_food';
   String get postHistory => '$url/post_history';
+  String get deleteHistory=> '$url/delete_history';
   String get getHistory => '$url/get_history';
   String get getNutrition => '$url/get_nutrition';
   String get getRecord => '$url/get_record';

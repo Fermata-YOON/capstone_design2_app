@@ -55,11 +55,57 @@ class _MyCalendar extends State<MyCalendar> {
       for (final d in days) {
         events = getEventsForDay(d);
         for (final e in events) {
-          selectedEvents.add('${d.month}.${d.day} $e');
+          selectedEvents.add('${d.month}.${d.day} ${history.foodName[int.parse(e.toString())]}');
         }
       }
 
       return selectedEvents;
+    }
+
+    List<int> getIndexForRange(DateTime? start, DateTime? end) {
+    // Implementation example
+      start ??= focusedDay;
+      end ??= focusedDay;
+      final days = daysInRange(start, end);
+
+      late List<Event> events;
+      List<int> selectedEvents = [];
+
+      for (final d in days) {
+        events = getEventsForDay(d);
+        for (final e in events) {
+          selectedEvents.add(int.parse(e.toString()));
+        }
+      }
+
+      return selectedEvents;
+    }
+
+    viewDetail(index) {
+      showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return AlertDialog(                                             
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text("섭취량 : ${history.foodAmount[index]}인분, 총${history.foodTotal[index]}g"),                  
+              ],
+            )
+          ),
+            actions: <Widget>[
+              ElevatedButton(
+                style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.lightGreen)),
+                child: const Text('닫기'), 
+                onPressed: () {
+                  Navigator.of(context).pop(); 
+                },
+              ),
+            ]
+          );
+        }
+      );    
     }
 
     List<Event> getEventsLoader(DateTime day) {
@@ -169,9 +215,11 @@ class _MyCalendar extends State<MyCalendar> {
                   borderRadius: BorderRadius.circular(5),
                 ),
                 child: ListTile(
-                title: 
-                  Text('${getEventsForRange(rangeStart, rangeEnd)[index]}'),
-                //isThreeLine: true,
+                  title: 
+                    Text('${getEventsForRange(rangeStart, rangeEnd)[index]}'),
+                  onTap: () {
+                    viewDetail(getIndexForRange(rangeStart, rangeEnd)[index]);
+                  },
                 ),
               );
             }

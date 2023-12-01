@@ -13,6 +13,7 @@ class Event {
 
 class History with ChangeNotifier {
 
+  late List<String> _foodIndex = List.empty(growable: true);
   late List<String> _foodName = List.empty(growable: true);
   late List<double> _foodAmount = List.empty(growable: true);
   late List<double> _foodTotal = List.empty(growable: true);
@@ -26,18 +27,21 @@ class History with ChangeNotifier {
   List get foodAmount => _foodAmount;
   List get foodTotal => _foodTotal;
   List get foodDate => _foodDate;
+  List get foodIndex => _foodIndex;
   int get length => _length;
 
   Map<DateTime, List<Event>> get events => _events;
 
 
   set setList(List value) {
+    _foodIndex = List.filled(value.length, "");
     _foodName = List.filled(value.length, "");
     _foodAmount = List.filled(value.length, 0);
     _foodTotal = List.filled(value.length, 0);
     _foodDate = List.filled(value.length, "");
      
     for(int i=0; i<value.length; i++) {
+      _foodIndex[i] = value[i]['num'];
       _foodName[i] = value[i]['name'];
       _foodAmount[i] = value[i]['amount'];
       _foodTotal[i] = value[i]['total'];
@@ -68,10 +72,10 @@ class History with ChangeNotifier {
       List date = _foodDate[i].split('-');
       if (_events[DateTime.utc(int.parse(date[0]), int.parse(date[1]), int.parse(date[2]))] == null) {
         _events.addAll({        
-          DateTime.utc(int.parse(date[0]), int.parse(date[1]), int.parse(date[2])) : [Event(_foodName[i])]
+          DateTime.utc(int.parse(date[0]), int.parse(date[1]), int.parse(date[2])) : [Event(i.toString())]
         });
       } else {
-        _events[DateTime.utc(int.parse(date[0]), int.parse(date[1]), int.parse(date[2]))]?.add(Event(_foodName[i]));
+        _events[DateTime.utc(int.parse(date[0]), int.parse(date[1]), int.parse(date[2]))]?.add(Event(i.toString()));
       }
      }
 

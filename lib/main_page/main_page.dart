@@ -57,7 +57,7 @@ class _MainPage extends State<MainPage> {
       history.setList = list;
       history.setLength = list.length;   
     }    
-  }
+  } 
 
   getAnalysis(String id) async {
     try {
