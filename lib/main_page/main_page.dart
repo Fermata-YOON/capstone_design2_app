@@ -3,7 +3,7 @@ import 'package:capstone_design2/main_page/calendar.dart';
 //import 'package:capstone_design2/main_page/select_category.dart';
 import 'package:flutter/material.dart';
 //import 'my_history.dart';
-import 'my_page.dart';
+import 'my_profile.dart';
 import 'my_report.dart';
 import 'my_recommend.dart';
 import 'package:provider/provider.dart';
@@ -96,7 +96,7 @@ class _MainPage extends State<MainPage> {
     http.Response response = await http.get(Uri.parse("${myServer.getNutrition}?id_give=$id"));
     String body = utf8.decode(response.bodyBytes);
     List<dynamic> list = jsonDecode(body);
-    if(mounted) return;
+    if(!mounted) return;
     nutrition.setData(list[0]['kcal'], list[0]['carbohydrate'], list[0]['protein'], list[0]['fat']);    
   }
 
@@ -117,9 +117,11 @@ class _MainPage extends State<MainPage> {
           getRecommend(user.id, user.preference);
           title = "추천 음식";
         case 1: 
-        //getNutrition(user.id);
-        getAnalysis(user.id);
-        title = "영양 분석";
+          getNutrition(user.id);
+          Future.delayed(const Duration(seconds: 1), () {
+            getAnalysis(user.id);
+          }); 
+          title = "영양 분석";
 
         case 2: 
         getHistory(user.id);

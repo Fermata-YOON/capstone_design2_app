@@ -409,6 +409,8 @@ class _WriteUserInfo extends State<WriteUserInfo> {
                           validator: (value) {
                             if(value == null || value.isEmpty) {
                               return "나이를 입력하세요";
+                            } else if (int.parse(value) < 1){
+                              return "0이상으로 입력하세요";
                             }
                             return null;
                           },
@@ -426,6 +428,8 @@ class _WriteUserInfo extends State<WriteUserInfo> {
                           validator: (value) {
                             if(value == null || value.isEmpty) {
                               return "키를 입력하세요";
+                            } else if (int.parse(value) < 1){
+                              return "0이상으로 입력하세요";
                             }
                             return null;
                           },
@@ -443,6 +447,8 @@ class _WriteUserInfo extends State<WriteUserInfo> {
                           validator: (value) {
                             if(value == null || value.isEmpty) {
                               return "몸무게를 입력하세요";
+                            } else if (int.parse(value) < 1){
+                              return "0이상으로 입력하세요";
                             }
                             return null;
                           },

@@ -33,16 +33,6 @@ class User with ChangeNotifier {
     }
   }
 
-  String get viewType {
-    if(_type == "N") {
-      return "일반인";
-    } if(_type == "H") {
-      return "운동인";
-    } else {
-      return "다이어터";
-    }
-  }
-
   String get viewPreference {
     if(_preference == 'rice') {
       return '밥';
@@ -99,6 +89,60 @@ class User with ChangeNotifier {
     _preference = category;
 
     notifyListeners();
+  }
+
+  editHeight(int height) {
+    _height = height;
+
+    notifyListeners();
+  }
+
+  editWeight(int weight) {
+    _weight = weight;
+
+    notifyListeners();
+  }
+
+  editAge(int age) {
+    _age = age;
+
+    notifyListeners();
+  }
+
+  editType(String type) {
+    _type = type;
+
+    notifyListeners();
+  }
+
+  editAct(int act) {
+    _act = act;
+
+    notifyListeners();
+  }
+
+  viewAct(int act) {
+    if(act == 25) {
+      return '5000보 이하';
+    } else if(act == 30) {
+      return '5000~10000만보';
+    } else if(act == 33) {
+      return '10000~15000보';
+    } else if(act == 35) {
+      return '150000~20000보';
+    } else {
+      return '15000보 이상';
+    }
+  }
+
+  viewType(String type) {
+    if(type == "N") {
+      return "일반인";
+    } else if(type == "H") {
+      return "운동인";
+    } else {
+      return "다이어터";
+    }
   }
 
   void clear() {

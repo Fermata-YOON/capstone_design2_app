@@ -24,6 +24,7 @@ class Nutrition with ChangeNotifier {
     _carbohydrate = carbohydrate;
     _protein = protein;
     _fat = fat;
+    
     notifyListeners();
   }
 
