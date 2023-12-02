@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../providers/food.dart';
 import '../../providers/record.dart';
+import '../../providers/nutrition.dart';
 import 'package:intl/intl.dart';
 import 'package:http/http.dart' as http;
 import '../../my_server.dart';
@@ -20,6 +21,7 @@ class _WriteFoodDetail extends State<WriteFoodDetail> {
 
   final myServer = MyServer();
   final record = Record();
+  final nutrition = Nutrition();
 
 
   @override
@@ -27,7 +29,41 @@ class _WriteFoodDetail extends State<WriteFoodDetail> {
 
     var food = Provider.of<Food>(context);
     var record = Provider.of<Record>(context);
+    var nutrition = Provider.of<Nutrition>(context);
     String foodName = ModalRoute.of(context)?.settings.arguments as String;
+
+    getAnalysis(String id) async {
+    try {
+      http.Response response = await http.get(Uri.parse("${myServer.getAnalysis}?id_give=$id"));
+      if(!mounted) return;
+      Map<String, dynamic> body = jsonDecode(utf8.decode(response.bodyBytes));
+      nutrition.setRate(body['carbohydrate'], body['protein'], body['fat']);
+    } catch(e) {
+      showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return AlertDialog(                                             
+            content: const SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text('getAnalysis Error')
+              ],
+            ),
+            ),
+            actions: <Widget>[
+              ElevatedButton(
+                child: const Text("OK"),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ]
+          );
+        }
+      ); 
+    }
+  }          
 
     void getRecord(String id) async {
     try {
@@ -36,6 +72,7 @@ class _WriteFoodDetail extends State<WriteFoodDetail> {
       List<dynamic> list = jsonDecode(body);
       //debugPrint(list as String?);
       record.setRecords(list);
+      getAnalysis(id);
     } catch (e) {
       // ignore: use_build_context_synchronously
       showDialog(

@@ -118,9 +118,9 @@ class _MainPage extends State<MainPage> {
           title = "추천 음식";
         case 1: 
           getNutrition(user.id);
-          Future.delayed(const Duration(seconds: 1), () {
-            getAnalysis(user.id);
-          }); 
+          //Future.delayed(const Duration(seconds: 1), () {
+          //  getAnalysis(user.id);
+          //}); 
           title = "영양 분석";
 
         case 2: 
