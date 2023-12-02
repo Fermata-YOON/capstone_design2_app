@@ -209,7 +209,7 @@ class _MainPage extends State<MainPage> {
       drawer: Drawer(
           child: ListView(padding: EdgeInsets.zero, children: <Widget>[
             const SizedBox(
-              height: 100,
+              height: 90,
               child: DrawerHeader(
                   decoration: BoxDecoration(
                     color: Colors.lightGreen,

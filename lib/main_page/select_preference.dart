@@ -30,39 +30,39 @@ class _SelectPreference extends State<SelectPreference> {
     List<dynamic> list = jsonDecode(body);
     if(!mounted) return;
     recommend.setList = list;
-    }
+  }
 
   void postPreference(int num, String id) async {
     user.setPreference(category[num]);
     try {
-      await http.post(Uri.parse(myServer.postPreference), 
-      body: {'id_give': id, 'category_give' : category[num]});
+      await http.post(Uri.parse(myServer.postPreference),
+          body: {'id_give': id, 'category_give' : category[num]});
       if(!mounted) return;
-      Navigator.pushNamed(context, '/main'); 
+      Navigator.pushNamed(context, '/main');
       getRecommend(user.id, category[num]);
     } catch(e) {
       showDialog(
-        context: context,
-        barrierDismissible: false,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            content: const SingleChildScrollView(
-              child: ListBody(
-                children: <Widget>[
-                  Text('error')
-                ],
-              ),
-            ),
-            actions: <Widget>[
-              ElevatedButton(
-                child: const Text('ok'),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-              ),
-            ]
-          );
-        }
+          context: context,
+          barrierDismissible: false,
+          builder: (BuildContext context) {
+            return AlertDialog(
+                content: const SingleChildScrollView(
+                  child: ListBody(
+                    children: <Widget>[
+                      Text('error')
+                    ],
+                  ),
+                ),
+                actions: <Widget>[
+                  ElevatedButton(
+                    child: const Text('ok'),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                ]
+            );
+          }
       );
     }
   }
@@ -73,91 +73,131 @@ class _SelectPreference extends State<SelectPreference> {
     user = Provider.of<User>(context);
 
     return Scaffold(
-      resizeToAvoidBottomInset: false,
-      appBar: AppBar(
-        title: const Text("선호 음식 수정하기"),
-        backgroundColor: Colors.lightGreen,
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SizedBox(
-              width: 300,
-              height: 60,
-              child: ElevatedButton(
-                style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(Colors.lightGreen)
-                ),
-                onPressed: () {
-                  postPreference(0, user.id);
-                  //getRecommend(user.id, category[0]);
-                },
-                child: const Text('밥', style: TextStyle(fontSize: 20, color: Colors.white)),
-              ),
-            ),
-            const SizedBox(height: 30),
-            SizedBox(
-              width: 300,
-              height: 60,
-              child: ElevatedButton(
-                style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(Colors.lightGreen)
-                ),
-                onPressed: () {
-                  postPreference(1, user.id);
-                },
-                child: const Text('고기', style: TextStyle(fontSize: 20, color: Colors.white),),
-              ),
-            ),
-            const SizedBox(height: 30),
-            SizedBox(
-              width: 300,
-              height: 60,
-              child: ElevatedButton(
-                style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(Colors.lightGreen)
-                ),
-                onPressed: () {
-                  postPreference(2, user.id);
-                  //getRecommend(user.id, category[2]);
-                },
-                child: const Text('면', style: TextStyle(fontSize: 20, color: Colors.white)),
-              ),
-            ),
-            const SizedBox(height: 30),
-            SizedBox(
-              width: 300,
-              height: 60,
-              child: ElevatedButton(
-                style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(Colors.lightGreen)
-                ),
-                onPressed: () {
-                  postPreference(3, user.id);
-                  //getRecommend(user.id, category[3]);
-                },
-                child: const Text('빵', style: TextStyle(fontSize: 20, color: Colors.white)),
-              ),
-            ),
-            const SizedBox(height: 30),
-            SizedBox(
-              width: 300,
-              height: 60,
-              child: ElevatedButton(
-                style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(Colors.lightGreen)
-                ),
-                onPressed: () {
-                  postPreference(4, user.id);
-                  //getRecommend(user.id, category[4]);
-                },
-                child: const Text('상관없음', style: TextStyle(fontSize: 20, color: Colors.white)),
-              ),
-            ),
-          ],
+        resizeToAvoidBottomInset: false,
+        appBar: AppBar(
+          title: const Text("선호 음식 수정하기"),
+          backgroundColor: Colors.lightGreen,
         ),
-      )
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SizedBox(
+                width: 300,
+                height: 100,
+                child: ElevatedButton(
+                    style:ElevatedButton.styleFrom(
+                        backgroundColor: Colors.white,
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
+                        side: BorderSide(color: Colors.black, width: 2.0),
+                        alignment: Alignment.center
+                    ),
+                    onPressed: () {
+                      postPreference(0, user.id);
+                      //getRecommend(user.id, category[0]);
+                    },
+                    child: Row(
+                      children: [
+                        Image.asset('assets/rice64.png'),
+                        SizedBox(width: 65),
+                        Text('밥', style: TextStyle(fontWeight: FontWeight.w700, fontSize: 30, color: Colors.black)),
+                      ],)
+                ),
+              ),
+              const SizedBox(height: 30),
+              SizedBox(
+                width: 300,
+                height: 100,
+                child: ElevatedButton(
+                    style:ElevatedButton.styleFrom(
+                        backgroundColor: Colors.white,
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
+                        side: BorderSide(color: Colors.black, width: 2.0),
+                        alignment: Alignment.center
+                    ),
+                    onPressed: () {
+                      postPreference(1, user.id);
+                      //getRecommend(user.id, category[0]);
+                    },
+                    child: Row(
+                      children: [
+                        Image.asset('assets/meat64.png'),
+                        SizedBox(width: 50),
+                        Text('고기', style: TextStyle(fontWeight: FontWeight.w700, fontSize: 30, color: Colors.black)),
+                      ],)
+                ),
+              ),
+              const SizedBox(height: 30),
+              SizedBox(
+                width: 300,
+                height: 100,
+                child: ElevatedButton(
+                    style:ElevatedButton.styleFrom(
+                        backgroundColor: Colors.white,
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
+                        side: BorderSide(color: Colors.black, width: 2.0),
+                        alignment: Alignment.center
+                    ),
+                    onPressed: () {
+                      postPreference(2, user.id);
+                      //getRecommend(user.id, category[0]);
+                    },
+                    child: Row(
+                      children: [
+                        Image.asset('assets/ramen64.png'),
+                        SizedBox(width: 65),
+                        Text('면', style: TextStyle(fontWeight: FontWeight.w700, fontSize: 30, color: Colors.black)),
+                      ],)
+                ),
+              ),
+              const SizedBox(height: 30),
+              SizedBox(
+                width: 300,
+                height: 100,
+                child: ElevatedButton(
+                    style:ElevatedButton.styleFrom(
+                        backgroundColor: Colors.white,
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
+                        side: BorderSide(color: Colors.black, width: 2.0),
+                        alignment: Alignment.center
+                    ),
+                    onPressed: () {
+                      postPreference(3, user.id);
+                      //getRecommend(user.id, category[0]);
+                    },
+                    child: Row(
+                      children: [
+                        Image.asset('assets/bread64.png'),
+                        SizedBox(width: 65),
+                        Text('빵', style: TextStyle(fontWeight: FontWeight.w700, fontSize: 30, color: Colors.black)),
+                      ],)
+                ),
+              ),
+              const SizedBox(height: 30),
+              SizedBox(
+                width: 300,
+                height: 100,
+                child: ElevatedButton(
+                    style:ElevatedButton.styleFrom(
+                        backgroundColor: Colors.white,
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
+                        side: BorderSide(color: Colors.black, width: 2.0),
+                        alignment: Alignment.center
+                    ),
+                    onPressed: () {
+                      postPreference(4, user.id);
+                      //getRecommend(user.id, category[0]);
+                    },
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text('상관없음', style: TextStyle(fontWeight: FontWeight.w700, fontSize: 30, color: Colors.black)),
+                      ],)
+                ),
+              ),
+            ],
+          ),
+        )
     );
   }
 }

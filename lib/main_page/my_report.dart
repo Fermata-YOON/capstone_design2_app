@@ -1,10 +1,19 @@
 import 'package:capstone_design2/providers/nutrition.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:syncfusion_flutter_charts/charts.dart';
 import '../providers/user.dart';
 import '../providers/record.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:pie_chart/pie_chart.dart';
+
+
+class ChartData {
+  ChartData(this.x, this.y);
+
+  final int x;
+  final int y;
+}
 
 class MyReport extends StatefulWidget {
   const MyReport({super.key});
@@ -36,13 +45,23 @@ class _MyReport extends State<MyReport> {
 
     Map<String, double> pieChartData = {'탄수화물' : double.parse(nutrition.carboRate.toString()), '단백질' : double.parse(nutrition.proteinRate.toString()), '지방' : double.parse(nutrition.fatRate.toString())};
 
+    final List<ChartData> chartData = [
+      //첫날, 막날은 날짜 필요업음
+      //for (int i = 0; i < 9; i++) ChartData(now.day - i + 1, 0),
+      for (int i = 0; i < 7; i++)
+        for (int j = 0; j < record.list.length; j++)
+        //Text('날짜는 ${DateTime.parse(record.list[j]['date']).day}'),
+          if (DateTime.parse(record.list[j]['date']).day == now.day - i)
+            ChartData(now.day - i, int.parse(record.list[j]['kcal']))
+    ];
+
     //Map<String, Object> args = ModalRoute.of(context)?.settings.arguments as Map<String, Object>;
     //String args = ModalRoute.of(context)?.settings.arguments as String;
     return Scaffold(
         body: Container(
           margin:  EdgeInsets.all(4),
           padding:  EdgeInsets.all(4),
-          child: Column(
+          child: ListView(
             children: [
               Container(
                 decoration: BoxDecoration(
@@ -121,53 +140,96 @@ class _MyReport extends State<MyReport> {
                 ),
               ),
               SizedBox(height: 10,),
-              PieChart(
-                dataMap: pieChartData,
-                //animationDuration: false,
-                chartLegendSpacing: 16,
-                chartRadius: MediaQuery.of(context).size.width / 1.5,
-                colorList: const [Colors.deepOrange, Colors.blueAccent, Colors.yellow],
-                initialAngleInDegree: 0,
-                chartType: ChartType.disc,
-                ringStrokeWidth: 32,
-                legendOptions: const LegendOptions(
-                  showLegendsInRow: false,
-                  legendPosition: LegendPosition.right,
-                  showLegends: true,
-                  legendShape: BoxShape.circle,
-                  legendTextStyle: TextStyle(
-                    fontWeight: FontWeight.bold,
+              Container(
+                  padding: EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                    color: Colors.cyan,
+                    border: Border.all(
+                      color: Colors.cyan,
+                      width: 0,
+                    ),
+                    borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                  ),
+                  child: SfCartesianChart(
+                      title: ChartTitle(
+                          text: '일주일간 섭취한 칼로리',
+                          //backgroundColor: Colors.lightGreen,
+                          //borderColor: Colors.blue,
+                          //borderWidth: 2,
+                          // Aligns the chart title to left
+                          alignment: ChartAlignment.center,
+                          textStyle: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            //fontFamily: 'Roboto',
+                            //fontStyle: FontStyle.italic,
+                            fontSize: 20,
+                          )
+                      ),
+                      primaryXAxis:
+                      NumericAxis(
+                        rangePadding: ChartRangePadding.none,
+                        //rangePadding: ChartRangePadding.additional
+                        /*       labelStyle: TextStyle(
+                                  color: Colors.white,
+                                  //fontFamily: 'Roboto',
+                                  //fontSize: 14,
+                                  //fontStyle: FontStyle.italic,
+                                  //fontWeight: FontWeight.w00
+                              )*/
+                      ),
+                      series: <ChartSeries<ChartData, int>>[
+                        // Renders column chart
+                        ColumnSeries<ChartData, int>(
+                          dataSource: chartData,
+                          xValueMapper: (ChartData data, _) => data.x,
+                          yValueMapper: (ChartData data, _) => data.y,
+                          color: Colors.white,
+
+                        )
+                      ])
+              ),
+              SizedBox(height: 10,),
+
+
+              Container(
+                padding: EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                  color: Colors.amber,
+                  border: Border.all(
+                    color: Colors.amber,
+                    width: 0,
+                  ),
+                  borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                ),
+                child: PieChart(
+                  dataMap: pieChartData,
+                  //animationDuration: false,
+                  chartLegendSpacing: 16,
+                  chartRadius: MediaQuery.of(context).size.width / 1.5,
+                  colorList: const [Colors.deepOrange, Colors.blueAccent, Colors.yellow],
+                  initialAngleInDegree: 0,
+                  chartType: ChartType.disc,
+                  ringStrokeWidth: 32,
+                  legendOptions: LegendOptions(
+                    showLegendsInRow: false,
+                    //legendPosition: ,
+                    showLegends: true,
+                    legendShape: BoxShape.circle,
+                    legendTextStyle: TextStyle(
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  chartValuesOptions: const ChartValuesOptions(
+                    showChartValueBackground: true,
+                    showChartValues: true,
+                    showChartValuesInPercentage: false,
+                    showChartValuesOutside: false,
+                    decimalPlaces: 1,
                   ),
                 ),
-                chartValuesOptions: const ChartValuesOptions(
-                  showChartValueBackground: true,
-                  showChartValues: true,
-                  showChartValuesInPercentage: false,
-                  showChartValuesOutside: false,
-                  decimalPlaces: 1,
-                ),
-              ), 
-              SizedBox(height: 10,),    
-              Expanded(
-                  child: ListView.builder(
-                      itemCount: record.list.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        return Card(
-                            shape: RoundedRectangleBorder(
-                              side: BorderSide(color: Colors.green, width: 2),
-                              borderRadius: BorderRadius.circular(5),
-                            ),
-                            child: Column(
-                              children: [
-                                Text('${record.list[index]['date']}',
-                                    style: const TextStyle(fontSize: 19)),
-                                Text('총 섭취 칼로리: ${record.list[index]['kcal']}'),
-                                Text('총 섭취 탄수화물:${record.list[index]['carbohydrate']}'),
-                                Text('총 섭취 단백질: ${record.list[index]['protein']}'),
-                                Text('총 섭취 지방: ${record.list[index]['fat']}'),
-                              ],
-                            ));
-                      }))
+              ),
+
             ],
           ),
         ));
