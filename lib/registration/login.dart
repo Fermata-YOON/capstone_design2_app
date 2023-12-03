@@ -59,15 +59,17 @@ class _LogInState extends State<LogIn> {
                     }
           );      
         } else {
-           Map<String, dynamic> body = jsonDecode(utf8.decode(response.bodyBytes));
-           user.setUser(body['id'], body['name'], body['sex'], body['type'], body['preference'], body['age'], body['height'], body['weight'], body['act']);
-           nutrition.setData(body['kcal'], body['carbohydrate'], body['protein'], body['fat']);
-           getRecord(id);
-           Navigator.pushNamedAndRemoveUntil(
+          Map<String, dynamic> body = jsonDecode(utf8.decode(response.bodyBytes));
+          user.setUser(body['id'], body['name'], body['sex'], body['type'], body['preference'], body['age'], body['height'], body['weight'], body['act']);
+          nutrition.setData(body['kcal'], body['carbohydrate'], body['protein'], body['fat']);
+          getRecord(id);
+          Future.delayed(const Duration(milliseconds: 50), () {
+            Navigator.pushNamedAndRemoveUntil(
             context,
             '/main',
             arguments: body['id'],
             (route) => false);  
+          });
         }
       }
     } catch(e) {

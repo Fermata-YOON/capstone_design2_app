@@ -125,7 +125,7 @@ class _MainPage extends State<MainPage> {
 
         case 2: 
         getHistory(user.id);
-        title = "검색";
+        title = "나의 기록";
       }
     }); // 탭을 클릭했을 때 지정한 페이지로 이동
   }
@@ -200,7 +200,7 @@ class _MainPage extends State<MainPage> {
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(icon: Icon(Icons.recommend), label: "추천"),
           BottomNavigationBarItem(icon: Icon(Icons.leaderboard), label: "분석"),
-          BottomNavigationBarItem(icon: Icon(Icons.list_alt), label: "검색"),
+          BottomNavigationBarItem(icon: Icon(Icons.calendar_month_rounded), label: "기록"),
         ],
         currentIndex: _selectedIndex, //지정인덱스로 이동
         selectedItemColor: Colors.lightGreen,
@@ -209,7 +209,7 @@ class _MainPage extends State<MainPage> {
       drawer: Drawer(
           child: ListView(padding: EdgeInsets.zero, children: <Widget>[
             const SizedBox(
-              height: 90,
+              height: 110,
               child: DrawerHeader(
                   decoration: BoxDecoration(
                     color: Colors.lightGreen,

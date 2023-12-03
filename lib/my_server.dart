@@ -14,4 +14,5 @@ class MyServer {
   String get postPreference => '$url/post_preference';
   String get getAnalysis => '$url/get_analysis';
   String get editProfile => '$url/edit_profile';
+  String get deleteUser => '$url/delete_user';
 }

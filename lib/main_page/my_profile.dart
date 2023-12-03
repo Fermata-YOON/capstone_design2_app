@@ -1,17 +1,15 @@
-//import 'package:capstone_design2/main_page/select_category.dart';
 import 'dart:convert';
 import 'package:capstone_design2/my_server.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-//import 'package:table_calendar/table_calendar.dart';
 import '../providers/user.dart';
 import '../providers/nutrition.dart';
+import '../providers/history.dart';
+import '../providers/food.dart';
+import '../providers/recommend.dart';
+import '../providers/record.dart';
 import 'package:http/http.dart' as http;
-
-//import 'package:http/http.dart' as http;
-//import 'calendar.dart';
-//import 'package:table_calendar/table_calendar.dart';
 
 class MyPage extends StatefulWidget {
   const MyPage({super.key});
@@ -23,6 +21,10 @@ class MyPage extends StatefulWidget {
 class _MyPage extends State<MyPage> {
   late User user;
   late Nutrition nutrition;
+  late History history;
+  late Food food;
+  late Recommend recommend;
+  late Record record;
 
   String inputAct = '';
   String inputType = '';
@@ -73,6 +75,47 @@ class _MyPage extends State<MyPage> {
         );  
       } 
     }
+
+  void deleteUser(String id) async {
+    http.Response response = await http.post(Uri.parse(myServer.deleteUser), body: {'id_give': id});
+    if(!mounted) return;
+    if(response.body == "1") {
+      Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);  
+      user.clear();
+      food.clear();
+      history.clear();
+      nutrition.clear();
+      recommend.clear();
+      record.clear();
+    } else {
+      showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return AlertDialog(                                             
+          content: const SingleChildScrollView(
+          child: ListBody(
+            children: <Widget>[
+              Text('회원탈퇴 오류')
+                  ],
+                ),
+              ),
+            actions: <Widget>[
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.lightGreen),
+                child: const Text("OK"),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ]
+          );
+        }
+      );  
+    }
+  }
+
 
   editProfile (String id, String sex, int age, int height, int weight, String type, String act) async {
     try{
@@ -609,11 +652,58 @@ class _MyPage extends State<MyPage> {
                 child: const Text('저장하기', style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 17
-                ),)
-              ),
-            ]
-
-
-          )));
+                ),
+              )
+            ),
+            ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.lightGreen,
+                      minimumSize: const Size(100, 40)),
+                onPressed: () {
+                  showDialog(
+                    context: context,
+                    barrierDismissible: false,
+                    builder: (BuildContext context) {
+                      return AlertDialog(                                             
+                        content: const SingleChildScrollView(
+                          child: Column(
+                            children: [
+                              Text("회원탈퇴시 모든 정보가 삭제됩니다."),
+                              Text("정말 회원탈퇴 하시겠습니다까?")
+                            ],)
+                          ),
+                        actions: <Widget>[
+                          ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.lightGreen),
+                            child: const Text("취소"),
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                          ),
+                          ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.lightGreen),
+                            child: const Text("탈퇴"),
+                            onPressed: () {
+                              deleteUser(user.id);
+                            },
+                          ),
+                        ]
+                      );
+                    }
+                  );   
+                  //
+                }, 
+                child: const Text('탈퇴하기', style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 17
+                ),
+              )
+            ),
+          ]
+        )
+      )
+    );
   }
 }
