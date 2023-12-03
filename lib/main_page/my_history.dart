@@ -44,6 +44,8 @@ class _MyHistory extends State<MyHistory> {
                 ),
               actions: <Widget>[
                 ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.lightGreen),
                   child: const Text('OK'), 
                   onPressed: () {
                     getHistory(user.id); 
@@ -71,6 +73,8 @@ class _MyHistory extends State<MyHistory> {
               ),
               actions: <Widget>[
                 ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.lightGreen),
                   child: const Text('OK'), 
                   onPressed: () {
                     Navigator.of(context).pop(); 
@@ -123,6 +127,8 @@ class _MyHistory extends State<MyHistory> {
             ),
             actions: <Widget>[
               ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.lightGreen),
                 child: const Text("OK"),
                 onPressed: () {
                   Navigator.of(context).pop();
@@ -157,6 +163,8 @@ class _MyHistory extends State<MyHistory> {
             ),
             actions: <Widget>[
               ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.lightGreen),
                 child: const Text("OK"),
                 onPressed: () {
                   Navigator.of(context).pop();
@@ -179,7 +187,7 @@ class _MyHistory extends State<MyHistory> {
 
     return Scaffold(
         appBar: AppBar(
-          title: const Text('섭취 기록' ),
+          title: const Text('섭취 기록' , style: TextStyle(fontWeight: FontWeight.bold),),
           backgroundColor: Colors.lightGreen,
         ),
       //resizeToAvoidBottomInset: false,

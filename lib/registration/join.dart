@@ -52,6 +52,8 @@ class _JoinUser extends State<JoinUser> {
                     ),
                     actions: <Widget>[
                       ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.lightGreen),
                         child: const Text('OK'), 
                         onPressed: () {
                           Navigator.of(context).pop();
@@ -77,7 +79,9 @@ class _JoinUser extends State<JoinUser> {
                     ),
                     actions: <Widget>[
                       ElevatedButton(
-                        child: const Text('Next'), 
+                        style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.lightGreen),
+                        child: const Text('Next'),
                         onPressed: () {
                           Navigator.pushNamedAndRemoveUntil(context, '/join2', ModalRoute.withName('/')); 
                         },
@@ -104,6 +108,8 @@ class _JoinUser extends State<JoinUser> {
             ),
             actions: <Widget>[
               ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.lightGreen),
                 child: const Text('ok'),
                 onPressed: () {
                   Navigator.of(context).pop();
@@ -229,9 +235,13 @@ class _JoinUser extends State<JoinUser> {
                                 }                                
                               },
                                 style: ElevatedButton.styleFrom(
-                                    backgroundColor: Colors.orangeAccent
+                                    backgroundColor: Colors.lightGreen,
+                                    minimumSize: const Size(100, 40)
                                 ),
-                                child: const Text('Next')                                
+                                child: const Text('Next',
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 18))
                               )
                           ),                                               
                         ],
@@ -291,6 +301,8 @@ class _WriteUserInfo extends State<WriteUserInfo> {
               ),
               actions: <Widget>[
                 ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.lightGreen),
                   child: const Text('OK'), 
                   onPressed: () {
                     Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false); 
@@ -315,6 +327,8 @@ class _WriteUserInfo extends State<WriteUserInfo> {
             ),
             actions: <Widget>[
               ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.lightGreen),
                 child: const Text('ok'),
                 onPressed: () {
                   Navigator.of(context).pop();
@@ -507,6 +521,8 @@ class _WriteUserInfo extends State<WriteUserInfo> {
                         },
                     ),
                     ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.lightGreen),
                       child: const Text("Join"),
                       onPressed: () {
                           if(_formkey.currentState!.validate()) {

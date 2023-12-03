@@ -53,12 +53,15 @@ class _MyPage extends State<MyPage> {
             content: const SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
+
                 Text('getNutrition error')
                     ],
                   ),
                 ),
               actions: <Widget>[
                 ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.lightGreen),
                   child: const Text("OK"),
                   onPressed: () {
                     Navigator.of(context).pop();
@@ -96,6 +99,8 @@ class _MyPage extends State<MyPage> {
                 ),
               actions: <Widget>[
                 ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.lightGreen),
                   child: const Text("OK"),
                   onPressed: () {
                     getNutrition(id);
@@ -121,6 +126,8 @@ class _MyPage extends State<MyPage> {
                 ),
               actions: <Widget>[
                 ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.lightGreen),
                   child: const Text("OK"),
                   onPressed: () {
                     Navigator.of(context).pop();
@@ -147,6 +154,8 @@ class _MyPage extends State<MyPage> {
               ),
             actions: <Widget>[
               ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.lightGreen),
                 child: const Text("OK"),
                 onPressed: () {
                   Navigator.of(context).pop();
@@ -223,6 +232,8 @@ class _MyPage extends State<MyPage> {
             ),
             actions: <Widget>[
               ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.lightGreen),
                 child: const Text("닫기"),
                 onPressed: () {
                   setState(() {
@@ -232,6 +243,8 @@ class _MyPage extends State<MyPage> {
                 },
               ),
               ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.lightGreen),
                 child: const Text("수정"),
                 onPressed: () {
                   Navigator.of(context).pop();
@@ -266,6 +279,8 @@ class _MyPage extends State<MyPage> {
             ),
             actions: <Widget>[
               ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.lightGreen),
                 child: const Text("닫기"),
                 onPressed: () {
                   setState(() {
@@ -275,6 +290,8 @@ class _MyPage extends State<MyPage> {
                 },
               ),
               ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.lightGreen),
                 child: const Text("수정"),
                 onPressed: () {
                   Navigator.of(context).pop();
@@ -309,6 +326,8 @@ class _MyPage extends State<MyPage> {
             ),
             actions: <Widget>[
               ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.lightGreen),
                 child: const Text("닫기"),
                 onPressed: () {
                   setState(() {
@@ -318,6 +337,8 @@ class _MyPage extends State<MyPage> {
                 },
               ),
               ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.lightGreen),
                 child: const Text("수정"),
                 onPressed: () {
                   Navigator.of(context).pop();
@@ -359,6 +380,8 @@ class _MyPage extends State<MyPage> {
             ),
             actions: <Widget>[
               ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.lightGreen),
                 child: const Text("닫기"),
                 onPressed: () {
                   setState(() {
@@ -368,6 +391,8 @@ class _MyPage extends State<MyPage> {
                 },
               ),
               ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.lightGreen),
                 child: const Text("수정"),
                 onPressed: () {
                   Navigator.of(context).pop();
@@ -412,6 +437,8 @@ class _MyPage extends State<MyPage> {
             ),
             actions: <Widget>[
               ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.lightGreen),
                 child: const Text("닫기"),
                 onPressed: () {
                   setState(() {
@@ -421,6 +448,8 @@ class _MyPage extends State<MyPage> {
                 },
               ),
               ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.lightGreen),
                 child: const Text("수정"),
                 onPressed: () {
                   Navigator.of(context).pop();
@@ -440,7 +469,7 @@ class _MyPage extends State<MyPage> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        title: const Text('내 프로필' ),
+        title: const Text('내 프로필' , style: TextStyle(fontWeight: FontWeight.bold)),
         backgroundColor: Colors.lightGreen,
       ),
       body: Center(
@@ -528,7 +557,11 @@ class _MyPage extends State<MyPage> {
                     editAct();
                   },),
               ),
+              SizedBox(height: 30,),
               ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.lightGreen,
+                      minimumSize: const Size(100, 40)),
                 onPressed: () {
                   showDialog(
                     context: context,
@@ -551,12 +584,16 @@ class _MyPage extends State<MyPage> {
                         ),
                         actions: <Widget>[
                           ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.lightGreen),
                             child: const Text("취소"),
                             onPressed: () {
                               Navigator.of(context).pop();
                             },
                           ),
                           ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.lightGreen),
                             child: const Text("저장"),
                             onPressed: () {
                               editProfile(user.id, user.sex, userAge, userHeight, userWeight, userType, userAct);
@@ -569,7 +606,10 @@ class _MyPage extends State<MyPage> {
                   );   
                   //
                 }, 
-                child: const Text('저장하기')
+                child: const Text('저장하기', style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 17
+                ),)
               ),
             ]
 

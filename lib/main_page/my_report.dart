@@ -11,7 +11,7 @@ import 'package:pie_chart/pie_chart.dart';
 class ChartData {
   ChartData(this.x, this.y);
 
-  final int x;
+  final String x;
   final int y;
 }
 
@@ -46,13 +46,20 @@ class _MyReport extends State<MyReport> {
     Map<String, double> pieChartData = {'탄수화물' : double.parse(nutrition.carboRate.toString()), '단백질' : double.parse(nutrition.proteinRate.toString()), '지방' : double.parse(nutrition.fatRate.toString())};
 
     final List<ChartData> chartData = [
-      //첫날, 막날은 날짜 필요업음
-      //for (int i = 0; i < 9; i++) ChartData(now.day - i + 1, 0),
-      for (int i = 0; i < 7; i++)
+
+      for (int i = 7; i > 0; i--)
         for (int j = 0; j < record.list.length; j++)
-        //Text('날짜는 ${DateTime.parse(record.list[j]['date']).day}'),
-          if (DateTime.parse(record.list[j]['date']).day == now.day - i)
-            ChartData(now.day - i, int.parse(record.list[j]['kcal']))
+          if (DateTime.parse(record.list[j]['date']).day == DateTime.now().subtract(Duration(days: i)).day)
+            ChartData(DateTime.now().subtract(Duration(days: i)).day.toString(), int.parse(record.list[j]['kcal']))
+          else
+            ChartData(DateTime.now().subtract(Duration(days: i)).day.toString(), 0)
+
+/*      for (int i = 0; i < 7; i++)
+        for (int j = 0; j < record.list.length; j++)
+          if (DateTime.parse(record.list[j]['date']).day == DateTime.now().subtract(Duration(days: i)).day)
+            ChartData(DateTime.now().subtract(Duration(days: i)).day.toString(), int.parse(record.list[j]['kcal']))
+          else
+            ChartData(DateTime.now().subtract(Duration(days: i)).day.toString(), 0)*/
     ];
 
     //Map<String, Object> args = ModalRoute.of(context)?.settings.arguments as Map<String, Object>;
@@ -167,7 +174,7 @@ class _MyReport extends State<MyReport> {
                           )
                       ),
                       primaryXAxis:
-                      NumericAxis(
+                      CategoryAxis(
                         rangePadding: ChartRangePadding.none,
                         //rangePadding: ChartRangePadding.additional
                         /*       labelStyle: TextStyle(
@@ -178,9 +185,9 @@ class _MyReport extends State<MyReport> {
                                   //fontWeight: FontWeight.w00
                               )*/
                       ),
-                      series: <ChartSeries<ChartData, int>>[
+                      series: <ChartSeries<ChartData, String>>[
                         // Renders column chart
-                        ColumnSeries<ChartData, int>(
+                        ColumnSeries<ChartData, String>(
                           dataSource: chartData,
                           xValueMapper: (ChartData data, _) => data.x,
                           yValueMapper: (ChartData data, _) => data.y,

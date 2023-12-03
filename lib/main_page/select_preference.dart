@@ -55,6 +55,8 @@ class _SelectPreference extends State<SelectPreference> {
                 ),
                 actions: <Widget>[
                   ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.lightGreen),
                     child: const Text('ok'),
                     onPressed: () {
                       Navigator.of(context).pop();
@@ -75,7 +77,7 @@ class _SelectPreference extends State<SelectPreference> {
     return Scaffold(
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
-          title: const Text("선호 음식 수정하기"),
+          title: const Text("선호 음식 수정하기", style: TextStyle(fontWeight: FontWeight.bold)),
           backgroundColor: Colors.lightGreen,
         ),
         body: Center(
