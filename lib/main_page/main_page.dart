@@ -45,6 +45,44 @@ class _MainPage extends State<MainPage> {
 
   final myServer = MyServer();
 
+
+  /*void getRecord(String id) async {
+    try {
+      http.Response response = await http.get(Uri.parse("${myServer.getRecord}?id_give=$id"));
+      //if(!mounted) return;
+      String body = utf8.decode(response.bodyBytes);
+      List<dynamic> list = jsonDecode(body);
+      //debugPrint(list as String?);
+      record.setRecords(list);
+      getAnalysis(id);
+      } catch (e) {
+      // ignore: use_build_context_synchronously
+      showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return AlertDialog(                                             
+            content: const SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text('getRecord Error')
+              ],
+            ),
+            ),
+            actions: <Widget>[
+              ElevatedButton(
+                child: const Text("OK"),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ]
+          );
+        }
+      );                    
+    }
+  }*/      
+
   void getHistory(String id) async {
     // ignore: unused_local_variable
     http.Response response = await http.get(Uri.parse("${myServer.getHistory}?id_give=$id"));
@@ -117,6 +155,7 @@ class _MainPage extends State<MainPage> {
           getRecommend(user.id, user.preference);
           title = "추천 음식";
         case 1: 
+          //getRecord(user.id);
           getNutrition(user.id);
           //Future.delayed(const Duration(seconds: 1), () {
           //  getAnalysis(user.id);

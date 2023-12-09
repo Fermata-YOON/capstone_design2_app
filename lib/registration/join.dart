@@ -521,8 +521,8 @@ class _WriteUserInfo extends State<WriteUserInfo> {
                         },
                     ),
                     ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.lightGreen),
+                      style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.lightGreen),
                       child: const Text("Join"),
                       onPressed: () {
                           if(_formkey.currentState!.validate()) {

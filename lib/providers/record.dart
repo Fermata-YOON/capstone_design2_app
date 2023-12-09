@@ -47,5 +47,7 @@ class Record with ChangeNotifier {
     _todayCarbohydrate = 0;
     _todayProtein = 0;
     _todayFat = 0;
+
+    notifyListeners();
   }
 }

@@ -53,6 +53,9 @@ class _WriteFoodDetail extends State<WriteFoodDetail> {
             ),
             actions: <Widget>[
               ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.green
+                ),
                 child: const Text("OK"),
                 onPressed: () {
                   Navigator.of(context).pop();
@@ -89,6 +92,9 @@ class _WriteFoodDetail extends State<WriteFoodDetail> {
           ),
           actions: <Widget>[
             ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.green
+              ),
               child: const Text("OK"),
               onPressed: () {
               Navigator.of(context).pop();
@@ -121,8 +127,13 @@ class _WriteFoodDetail extends State<WriteFoodDetail> {
                 ),
                 actions: <Widget>[
                   ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.green
+                    ),
                     child: const Text('OK'), 
                     onPressed: () {
+                      food.setAmount = 0;
+                      food.setDate = DateTime.now();
                       getRecord(food.id);
                       Navigator.pushNamedAndRemoveUntil(context, '/main', (route) => false); 
                     },
@@ -183,7 +194,6 @@ class _WriteFoodDetail extends State<WriteFoodDetail> {
             ),
             body: Center(
                 child: Padding(
-
                   padding: const EdgeInsets.all(80.0),
                   child: Column(
                       children: [
@@ -244,8 +254,6 @@ class _WriteFoodDetail extends State<WriteFoodDetail> {
                             padding: const EdgeInsets.all(10.0),
                             child: ElevatedButton(
                               style: ElevatedButton.styleFrom(
-                                //shape: RoundedRectangleBorder(	//모서리를 둥글게//
-                                //borderRadius: BorderRadius.circular(20))
                                   backgroundColor: Colors.green
                               ),
                               onPressed: () {
@@ -271,6 +279,9 @@ class _WriteFoodDetail extends State<WriteFoodDetail> {
                                                 },
                                               ),
                                               ElevatedButton(
+                                                style: ElevatedButton.styleFrom(
+                                                    backgroundColor: Colors.green
+                                                ),
                                                 child: const Text('확인'),
                                                 onPressed: () {
                                                   addHistory();
@@ -295,6 +306,9 @@ class _WriteFoodDetail extends State<WriteFoodDetail> {
                                             ),
                                             actions: <Widget>[
                                               ElevatedButton(
+                                                style: ElevatedButton.styleFrom(
+                                                    backgroundColor: Colors.green
+                                                ),
                                                 child: const Text('확인'),
                                                 onPressed: () {
                                                   Navigator.of(context).pop();

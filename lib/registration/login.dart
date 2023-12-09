@@ -49,6 +49,9 @@ class _LogInState extends State<LogIn> {
                   ),
                   actions: <Widget>[
                     ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.green
+                      ),
                       child: const Text('확인'), 
                       onPressed: () {
                       Navigator.of(context).pop();
@@ -88,6 +91,9 @@ class _LogInState extends State<LogIn> {
                   ),
                   actions: <Widget>[
                     ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.green
+                      ),
                       child: const Text("Error"),
                       onPressed: () {
                       Navigator.of(context).pop();
@@ -125,6 +131,9 @@ class _LogInState extends State<LogIn> {
             ),
             actions: <Widget>[
               ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.green
+                ),
                 child: const Text("OK"),
                 onPressed: () {
                   Navigator.of(context).pop();
@@ -159,6 +168,9 @@ class _LogInState extends State<LogIn> {
             ),
             actions: <Widget>[
               ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.green
+                ),
                 child: const Text("OK"),
                 onPressed: () {
                   Navigator.of(context).pop();
