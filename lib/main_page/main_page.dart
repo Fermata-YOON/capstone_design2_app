@@ -130,21 +130,74 @@ class _MainPage extends State<MainPage> {
     }
   }          
 
-  void getNutrition(String id) async {
-    http.Response response = await http.get(Uri.parse("${myServer.getNutrition}?id_give=$id"));
-    String body = utf8.decode(response.bodyBytes);
-    List<dynamic> list = jsonDecode(body);
-    if(!mounted) return;
-    nutrition.setData(list[0]['kcal'], list[0]['carbohydrate'], list[0]['protein'], list[0]['fat']);    
+  getNutrition(String id) async {
+    try {
+      http.Response response = await http.get(Uri.parse("${myServer.getNutrition}?id_give=$id"));
+      String body = utf8.decode(response.bodyBytes);
+      List<dynamic> list = jsonDecode(body);
+      if(!mounted) return;
+      nutrition.setData(list[0]['kcal'], list[0]['carbohydrate'], list[0]['protein'], list[0]['fat']);    
+    } catch(e) {
+      showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return AlertDialog(                                             
+            content: const SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text('getNutrition Error')
+              ],
+            ),
+            ),
+            actions: <Widget>[
+              ElevatedButton(
+                child: const Text("OK"),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ]
+          );
+        }
+      );
+    }
   }
 
   void getRecommend(String id, String label) async {
-    // ignore: unused_local_variable
-    http.Response response = await http.get(Uri.parse("${myServer.getRecommend}?id_give=$id&label_give=$label"));
-    String body = utf8.decode(response.bodyBytes);
-    List<dynamic> list = jsonDecode(body);
-    if(!mounted) return;
-    recommend.setList = list;
+    try {
+      // ignore: unused_local_variable
+      http.Response response = await http.get(Uri.parse("${myServer.getRecommend}?id_give=$id&label_give=$label"));
+      String body = utf8.decode(response.bodyBytes);
+      List<dynamic> list = jsonDecode(body);
+      if(!mounted) return;
+      recommend.setList = list;
+    } catch(e) {
+      showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return AlertDialog(                                             
+            content: const SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text('getRecommend Error')
+              ],
+            ),
+            ),
+            actions: <Widget>[
+              ElevatedButton(
+                child: const Text("OK"),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ]
+          );
+        }
+      );
+    }
+    
   }
 
   void _onItemTapped(int index) {

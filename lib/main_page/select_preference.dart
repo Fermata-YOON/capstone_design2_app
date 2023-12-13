@@ -32,7 +32,7 @@ class _SelectPreference extends State<SelectPreference> {
     recommend.setList = list;
   }
 
-  void postPreference(int num, String id) async {
+  postPreference(int num, String id) async {
     user.setPreference(category[num]);
     try {
       await http.post(Uri.parse(myServer.postPreference),

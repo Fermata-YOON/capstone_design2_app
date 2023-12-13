@@ -285,7 +285,8 @@ class _WriteUserInfo extends State<WriteUserInfo> {
     try {
       // ignore: unused_local_variable
       http.Response response = await http.post(Uri.parse(myServer.join), 
-      body: {'id_give': id, 'pw_give': pw, 'name_give': name, 'age_give': age, 'sex_give': sex, 'type_give': type, 'height_give': height, 'weight_give': weight, 'act_give': act});
+      body: {'id_give': id, 'pw_give': pw, 'name_give': name, 'age_give': age, 'sex_give': sex, 'type_give': type, 
+             'height_give': height, 'weight_give': weight, 'act_give': act});
       if(!mounted) return;
       showDialog(
         context: context,

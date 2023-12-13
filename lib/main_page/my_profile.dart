@@ -76,7 +76,7 @@ class _MyPage extends State<MyPage> {
       } 
     }
 
-  void deleteUser(String id) async {
+  deleteUser(String id) async {
     http.Response response = await http.post(Uri.parse(myServer.deleteUser), body: {'id_give': id});
     if(!mounted) return;
     if(response.body == "1") {
@@ -120,7 +120,8 @@ class _MyPage extends State<MyPage> {
   editProfile (String id, String sex, int age, int height, int weight, String type, String act) async {
     try{
       http.Response response = await http.post(Uri.parse(myServer.editProfile), 
-      body: {'id_give': id, 'sex_give': sex, 'age_give': age.toString(), 'type_give': type, 'height_give': height.toString(), 'weight_give': weight.toString(), 'act_give': act});
+      body: {'id_give': id, 'sex_give': sex, 'age_give': age.toString(), 'type_give': type, 
+              'height_give': height.toString(), 'weight_give': weight.toString(), 'act_give': act});
       if(!mounted) return;
       if(response.body == "1") {
         user.editHeight(height);
